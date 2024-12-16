@@ -42,6 +42,6 @@ fun printAgeIfPerson(obj: Any) {
 
     var a = null
     if (obj !is String) {
-
+        
     }
 }
