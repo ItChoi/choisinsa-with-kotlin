@@ -1,4 +1,4 @@
-HELP.md
+README.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
@@ -38,3 +38,14 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+application-database.yml
+application-jwt.yml
+application-oauth.yml
+application-redis.yml
+
+sql/**
+
+**/secret/**
+*.env
+.env

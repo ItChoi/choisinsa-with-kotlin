@@ -4,7 +4,7 @@ import kotlin.contracts.contract
 
 //class Person constructor(name: String, age: Int) {
 //class Person(name: String, age: Int) {
-class Person(
+data class Person(
     // 주 생성자 -> 반드시 존재, 기본 값을 여기다가 추가해서 사용하는 것을 권장
     val name: String,
     var age: Int
