@@ -1,11 +1,11 @@
-package com.choisinsa
+package com.mall.choisinsa
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class ChoisinsaWithKotlinApplication
+class ModuleAppAdminKtApplication
 
 fun main(args: Array<String>) {
-	runApplication<ChoisinsaWithKotlinApplication>(*args)
+    runApplication<ModuleAppAdminKtApplication>(*args)
 }
