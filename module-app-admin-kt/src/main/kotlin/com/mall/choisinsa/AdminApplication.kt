@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class ModuleAppAdminKtApplication
+class AdminApplication
 
 fun main(args: Array<String>) {
-    runApplication<ModuleAppAdminKtApplication>(*args)
+    runApplication<AdminApplication>(*args)
 }
