@@ -3,6 +3,7 @@ plugins {
 	kotlin("plugin.spring") version "1.9.25"
 	id("org.springframework.boot") version "3.4.0"
 	id("io.spring.dependency-management") version "1.1.6"
+	kotlin("kapt") version "1.9.25"
 }
 
 group = "com"
@@ -23,7 +24,6 @@ allprojects {
 	apply(plugin = "org.springframework.boot")
 	apply(plugin = "io.spring.dependency-management")
 	apply(plugin = "java")
-
 
 	repositories {
 		mavenCentral()
@@ -55,6 +55,9 @@ allprojects {
 }
 
 subprojects {
+	// 플러그인 적용
+	apply(plugin = "org.jetbrains.kotlin.kapt")
+
 	dependencies {
 		implementation("org.jetbrains.kotlin:kotlin-reflect")
 
