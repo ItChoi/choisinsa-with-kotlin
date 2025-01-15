@@ -8,22 +8,22 @@ import jakarta.persistence.*
 class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long? = null,
+    val id: Long? = null,
 
     private val loginId: String,
 
     private val password: String,
 
     @Enumerated(EnumType.STRING)
-    private val status: MemberStatus,
+    private val status: MemberStatus = MemberStatus.NORMAL,
 
     private val name: String? = null,
 
-    private val email: String? = null,
+    private val email: String,
 
     private val nickName: String? = null,
 
-    private val phoneNumber: String? = null,
+    private val phoneNumber: String,
 
     private val profileFileUrl: String? = null,
     ) : BaseDateTimeEntity() {

@@ -1,5 +1,6 @@
 package com.mall.choisinsa.domain.member
 
+import com.mall.choisinsa.common.enumeration.LoginType
 import com.mall.choisinsa.domain.common.BaseDateTimeEntity
 import jakarta.persistence.*
 
@@ -14,7 +15,7 @@ class MemberSnsConnect(
     private val snsId: String,
 
     @Enumerated(EnumType.STRING)
-    private val snsType: SnsType,
+    private val snsType: LoginType,
 
 ) : BaseDateTimeEntity() {
 

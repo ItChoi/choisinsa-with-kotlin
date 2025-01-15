@@ -15,21 +15,22 @@ class MemberDetail(
     private val birthday: String? = null,
 
     @Enumerated(EnumType.STRING)
-    private val gender: GenderType,
+    private val gender: GenderType = GenderType.NONE,
 
     private val height: Int? = null,
 
     private val weight: Int? = null,
-
-    private val isAcceptMarketing: Boolean = false,
-
-    private val isAuthenticateEmail: Boolean = false,
-
-    private val isAuthenticatePhone: Boolean = false,
 
     private val selfIntroduce: String? = null,
 
     private val recommenderMemberId: Long? = null,
 ) : BaseDateTimeEntity() {
 
+    companion object {
+        fun from(memberId: Long): MemberDetail {
+            return MemberDetail(
+                memberId = memberId
+            )
+        }
+    }
 }

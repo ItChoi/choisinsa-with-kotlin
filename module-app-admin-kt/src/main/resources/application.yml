@@ -3,4 +3,8 @@ server:
 
 spring:
   application:
-    name=module-app-admin-kt
+    name: module-app-admin-kt
+#  profiles:
+#    active: admin
+#    include: database
+

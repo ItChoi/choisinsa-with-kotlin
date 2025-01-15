@@ -5,10 +5,11 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class MemberDto(
-    val _username: String,
-    var _password: String? = null,
-    val _authorities: MutableList<GrantedAuthority> = mutableListOf()
+    private val _username: String,
+    private var _password: String? = null,
+    private val _authorities: MutableList<GrantedAuthority> = mutableListOf()
 ) : UserDetails, CredentialsContainer {
+
     override fun getUsername(): String {
         return this._username
     }
@@ -18,7 +19,7 @@ class MemberDto(
     }
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return this.authorities
+        return this._authorities
     }
 
     override fun eraseCredentials() {

@@ -13,26 +13,25 @@ import org.springframework.security.web.SecurityFilterChain
 @Configuration
 class SecurityConfig {
 
-    @Bean
-    open fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        http {
-            sessionManagement {
-                sessionCreationPolicy = SessionCreationPolicy.STATELESS
-            }
-
-            authorizeHttpRequests {
-                getUnsecuredHttpGetMethod().forEach { authorize(HttpMethod.GET, it, permitAll) }
-                getUnsecuredHttpPostMethod().forEach { authorize(HttpMethod.POST, it, permitAll) }
-                authorize(anyRequest, authenticated)
-            }
-
-            //formLogin { disable() }
-            csrf { disable() }
-            httpBasic { disable() }
-        }
-
-        return http.build()
-    }
+//    @Bean
+//    open fun filterChain(http: HttpSecurity): SecurityFilterChain {
+//        http {
+//            sessionManagement {
+//                sessionCreationPolicy = SessionCreationPolicy.STATELESS
+//            }
+//            authorizeHttpRequests {
+//                getUnsecuredHttpGetMethod().forEach { authorize(HttpMethod.GET, it, permitAll) }
+//                getUnsecuredHttpPostMethod().forEach { authorize(HttpMethod.POST, it, permitAll) }
+//                authorize(anyRequest, authenticated)
+//            }
+//
+//            //formLogin { disable() }
+//            csrf { disable() }
+//            httpBasic { disable() }
+//        }
+//
+//        return http.build()
+//    }
 
     fun getUnsecuredHttpGetMethod(): List<String> {
         return listOf(
@@ -42,7 +41,7 @@ class SecurityConfig {
 
     private fun getUnsecuredHttpPostMethod(): List<String> {
         return listOf(
-
+            "/api/member"
         )
     }
 }
