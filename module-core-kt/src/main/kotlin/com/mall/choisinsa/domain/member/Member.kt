@@ -10,18 +10,18 @@ class Member(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
-    private val loginId: String,
+    val loginId: String,
 
-    private val password: String,
+    val password: String,
 
     @Enumerated(EnumType.STRING)
-    private val status: MemberStatus = MemberStatus.NORMAL,
+    val status: MemberStatus = MemberStatus.NORMAL,
 
     private val name: String? = null,
 
     private val email: String,
 
-    private val nickName: String? = null,
+    val nickName: String? = null,
 
     private val phoneNumber: String,
 

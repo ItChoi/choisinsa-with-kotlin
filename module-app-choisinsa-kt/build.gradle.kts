@@ -47,32 +47,3 @@ tasks.asciidoctor {
     inputs.dir(project.extra["snippetsDir"]!!)
     dependsOn(tasks.test)
 }
-
-
-// Querydsl 설정부 추가 - start
-val generated = file("src/main/generated")
-
-// querydsl QClass 파일 생성 위치를 지정
-tasks.withType<JavaCompile> {
-    options.generatedSourceOutputDirectory.set(generated)
-}
-
-// kotlin source set 에 querydsl QClass 위치 추가
-sourceSets {
-    main {
-        kotlin.srcDirs += generated
-    }
-}
-
-// gradle clean 시에 QClass 디렉토리 삭제
-tasks.named("clean") {
-    doLast {
-        generated.deleteRecursively()
-    }
-}
-
-
-kapt {
-    generateStubs = true
-}
-// Querydsl 설정부 추가 - end

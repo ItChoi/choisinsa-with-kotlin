@@ -1,13 +1,13 @@
-package com.mall.choisinsa.dto.wrapper
+package com.mall.choisinsa.dto.global
 
 import com.mall.choisinsa.common.enumeration.exception.ExceptionType
 import org.springframework.http.HttpStatus
 
-class ResponseWrapper(
+class ResponseWrapper private constructor (
     private val status: HttpStatus,
-    private val exceptionType: ExceptionType? = null,
-    private val exceptionMsg: String? = null,
-    private val data: Any? = null,
+    private val exceptionType: ExceptionType?,
+    private val exceptionMsg: String?,
+    private val data: Any?,
 ) {
     companion object {
         fun ok(

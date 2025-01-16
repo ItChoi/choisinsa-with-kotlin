@@ -6,7 +6,7 @@ class Validation {
     companion object {
 
         fun areAllNotBlank(vararg values: String?): Boolean {
-            require(values.isNotEmpty()) {
+            if (values.isEmpty()) {
                 return false
             }
 

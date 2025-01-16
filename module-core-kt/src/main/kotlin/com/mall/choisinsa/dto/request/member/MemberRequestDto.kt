@@ -16,12 +16,11 @@ data class MemberRequestDto(
     val ci: String,
 ) {
     init {
-        TODO("유효성 검증")
-        if (!MemberValidation.isValidLoginId(this.loginId)
-            || !MemberValidation.isValidPassword(this.password)
-            || !MemberValidation.isValidEmail(this.email)) {
-            throw InvalidParameterException()
-        }
+//        require(
+//            MemberValidation.isValidLoginId(this.loginId)
+//                    && MemberValidation.isValidPassword(this.password)
+//                    && MemberValidation.isValidEmail(this.email)
+//        )
     }
     fun toEntity(): Member {
         return Member(
