@@ -47,7 +47,27 @@ class MemberDto private constructor (
         return this._authorities
     }
 
+
     override fun eraseCredentials() {
         this._password = null
+    }
+
+    fun toUsernamePasswordAuthenticationToken(): UsernamePasswordAuthenticationToken {
+        eraseCredentials()
+        return UsernamePasswordAuthenticationToken(
+            this,
+            null,
+            this.authorities
+        )
+    }
+
+    fun toTokenPayload(): MutableMap<String, Any?> {
+        return mutableMapOf(
+            "id" to this.id,
+            "status" to this.status,
+            "nickName" to this.nickName,
+            "loginId" to this._username,
+            "authorities" to this._authorities,
+        )
     }
 }

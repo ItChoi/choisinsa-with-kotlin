@@ -4,10 +4,10 @@ import com.mall.choisinsa.common.enumeration.exception.ExceptionType
 import org.springframework.http.HttpStatus
 
 class ResponseWrapper private constructor (
-    private val status: HttpStatus,
-    private val exceptionType: ExceptionType?,
-    private val exceptionMsg: String?,
-    private val data: Any?,
+    val status: HttpStatus,
+    val exceptionType: ExceptionType?,
+    val exceptionMsg: String?,
+    val data: Any?,
 ) {
     companion object {
         fun ok(

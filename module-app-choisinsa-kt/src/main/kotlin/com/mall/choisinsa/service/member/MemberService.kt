@@ -10,6 +10,7 @@ import com.mall.choisinsa.repository.member.CoreMemberDetailRepository
 import com.mall.choisinsa.repository.member.CoreMemberRepository
 import com.mall.choisinsa.repository.member.MemberQuerydslRepository
 import com.mall.choisinsa.service.CoreMemberService
+import com.mall.choisinsa.web.provider.JwtTokenProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -24,6 +25,7 @@ class MemberService (
     private val coreMemberService: CoreMemberService,
     private val memberQuerydslRepository: MemberQuerydslRepository,
     private val authenticationProvider: AuthenticationProvider,
+    private val jwtTokenProvider: JwtTokenProvider,
 ) {
 
     @Transactional
@@ -44,13 +46,14 @@ class MemberService (
     fun login(request: LoginRequestDto): TokenResponseDto {
         val memberDto = authenticationProvider.authenticate(
             UsernamePasswordAuthenticationToken(request.loginId, request.password)
-        ) as MemberDto
-        TODO("액세스 토큰 발급")
+        ).principal as MemberDto
 
-        val accessToken = ""
         val refreshToken = ""
 
-        return TokenResponseDto(accessToken, refreshToken)
+        return TokenResponseDto(
+            jwtTokenProvider.generateToken(memberDto.toTokenPayload(), memberDto),
+            refreshToken
+        )
     }
 
 }

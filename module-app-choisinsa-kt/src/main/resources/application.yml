@@ -4,7 +4,7 @@ server:
 spring:
   profiles:
     active: client
-    include: database
+    include: database, jwt
 
 ---
 

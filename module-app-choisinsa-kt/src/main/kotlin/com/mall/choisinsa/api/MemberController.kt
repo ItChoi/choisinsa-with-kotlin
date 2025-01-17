@@ -21,6 +21,10 @@ class MemberController (
     fun login(
         @RequestBody request: LoginRequestDto
     ): ResponseWrapper {
+        /**
+         * eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3RhdHVzIjoiTk9STUFMIiwibmlja05hbWUiOiLrkZjrpqzriIjslYwiLCJsb2dpbklkIjoidGVzdCIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJNRU1CRVIifV0sInN1YiI6InRlc3QiLCJpYXQiOjE3MzcwODE0MzYsImV4cCI6MTczNzA4MjMzNn0.gENhR-y7sKa5McT8dSbBx3FD2Mk8XxPpEU0SZjGf6WM
+         * eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3RhdHVzIjoiTk9STUFMIiwibmlja05hbWUiOiLrkZjrpqzriIjslYwiLCJsb2dpbklkIjoidGVzdCIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJNRU1CRVIifV0sInN1YiI6InRlc3QiLCJpYXQiOjE3MzcwODE5NTgsImV4cCI6MTczNzA4Mjg1OH0.LysVEVIay33Faq-SUHDJqVcZjdrHTQ6w9b50dIRPrVs
+         */
         return ResponseWrapper.ok(
             data = memberService.login(request)
         )
