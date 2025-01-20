@@ -17,7 +17,6 @@ class MemberDto private constructor (
     private val _username: String,
     private var _password: String? = null,
     private val _authorities: MutableList<GrantedAuthority> = mutableListOf(),
-
 ) : UserDetails, CredentialsContainer {
 
     companion object {

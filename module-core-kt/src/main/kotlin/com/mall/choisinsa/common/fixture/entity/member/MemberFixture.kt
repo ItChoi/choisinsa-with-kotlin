@@ -14,7 +14,7 @@ class MemberFixture {
     var phoneNumber: String = "3cLKKmND91F7TMcaS3292Q=="
     var profileFileUrl: String? = "./test_profile_img.png"
 
-    fun build(): Member {
+    private fun build(): Member {
         return Member(
             id = this.id,
             loginId = this.loginId,

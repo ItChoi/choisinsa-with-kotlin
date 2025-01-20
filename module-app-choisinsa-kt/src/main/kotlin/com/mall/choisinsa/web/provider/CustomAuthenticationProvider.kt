@@ -2,7 +2,9 @@ package com.mall.choisinsa.web.provider
 
 import com.mall.choisinsa.common.enumeration.exception.ExceptionType
 import com.mall.choisinsa.dto.global.MemberDto
+import com.mall.choisinsa.dto.request.member.LoginRequestDto
 import com.mall.choisinsa.service.member.SecurityService
+import com.mall.choisinsa.web.exception.GlobalException
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.BadCredentialsException
@@ -30,9 +32,9 @@ class CustomAuthenticationProvider(
         val loginId = authentication.principal.toString()
         val password = authentication.credentials.toString()
 
-        val memberDto = securityService.loadUserByUsername(loginId) as MemberDto
+        val memberDto = securityService.loadUserByLoginId(loginId)
         if (!passwordEncoder.matches(password, memberDto.password)) {
-            throw BadCredentialsException(ExceptionType.MISMATCH_REQUEST.msg);
+            throw GlobalException(ExceptionType.MISMATCH_REQUEST);
         }
 
         return memberDto

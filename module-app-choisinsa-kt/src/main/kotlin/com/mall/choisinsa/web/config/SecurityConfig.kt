@@ -1,21 +1,52 @@
 package com.mall.choisinsa.web.config
 
+import com.mall.choisinsa.common.enumeration.exception.ExceptionType
+import com.mall.choisinsa.service.member.SecurityService
+import com.mall.choisinsa.web.exception.GlobalException
+import com.mall.choisinsa.web.filter.JwtAuthenticationFilter
+import com.mall.choisinsa.web.provider.JwtTokenProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
-import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @EnableWebSecurity
 @Configuration
-class SecurityConfig {
+class SecurityConfig(
+    private val jwtTokenProvider: JwtTokenProvider,
+    private val securityService: SecurityService,
+) {
+    companion object {
+        fun isPermit(
+            httpMethod: String,
+            requestUri: String,
+         ): Boolean {
+            return when (httpMethod.lowercase()) {
+                "get" -> getUnsecuredHttpGetMethod().contains(requestUri)
+                "post" -> getUnsecuredHttpPostMethod().contains(requestUri)
+                else -> throw GlobalException(ExceptionType.BAD_REQUEST)
+            }
+        }
+
+        fun getUnsecuredHttpGetMethod(): List<String> {
+            return listOf(
+
+            )
+        }
+
+        fun getUnsecuredHttpPostMethod(): List<String> {
+            return listOf(
+                "/api/member/login"
+            )
+        }
+    }
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
@@ -29,10 +60,11 @@ class SecurityConfig {
                 authorize(anyRequest, authenticated)
             }
 
-
-            //formLogin { disable() }
+            formLogin {  }
             csrf { disable() }
             httpBasic { disable() }
+
+            addFilterBefore<UsernamePasswordAuthenticationFilter>(JwtAuthenticationFilter(jwtTokenProvider, securityService))
         }
 
         return http.build()
@@ -41,18 +73,5 @@ class SecurityConfig {
     @Bean
     fun passwordEncoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
-    }
-
-
-    fun getUnsecuredHttpGetMethod(): List<String> {
-        return listOf(
-
-        )
-    }
-
-    private fun getUnsecuredHttpPostMethod(): List<String> {
-        return listOf(
-            "/api/member/login"
-        )
     }
 }

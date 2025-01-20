@@ -23,5 +23,19 @@ class ResponseWrapper private constructor (
                 data,
             )
         }
+
+        fun error(
+            status: HttpStatus,
+            exceptionType: ExceptionType,
+            exceptionMsg: String? = null,
+            data: Any? = null,
+        ): ResponseWrapper {
+            return ResponseWrapper(
+                status,
+                exceptionType,
+                exceptionMsg,
+                data,
+            )
+        }
     }
 }

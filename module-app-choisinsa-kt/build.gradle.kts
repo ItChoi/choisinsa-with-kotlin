@@ -29,6 +29,9 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
+    // oauth2
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
