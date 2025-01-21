@@ -1,14 +1,13 @@
 package com.mall.choisinsa.dto.request.member
 
 import com.mall.choisinsa.common.enumeration.LoginType
-import com.mall.choisinsa.common.util.MemberValidation
+import com.mall.choisinsa.common.fixture.entity.member.MemberFixture
 import com.mall.choisinsa.domain.member.Member
-import java.security.InvalidParameterException
 
 data class MemberRequestDto(
     private val loginType: LoginType = LoginType.HOME,
     val loginId: String,
-    private val password: String,
+    var password: String,
     val email: String,
     val recommenderLoginId: String?,
 

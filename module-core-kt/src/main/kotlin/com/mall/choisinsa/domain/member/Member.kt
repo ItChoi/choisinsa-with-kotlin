@@ -3,6 +3,7 @@ package com.mall.choisinsa.domain.member
 import com.mall.choisinsa.common.enumeration.MemberStatus
 import com.mall.choisinsa.domain.common.BaseDateTimeEntity
 import jakarta.persistence.*
+import java.time.LocalDateTime
 
 @Entity
 class Member(
@@ -26,6 +27,11 @@ class Member(
     private val phoneNumber: String,
 
     private val profileFileUrl: String? = null,
-    ) : BaseDateTimeEntity() {
+
+    private val lastLoginDt: LocalDateTime? = null,
+
+    createdDt: LocalDateTime? = null,
+    updatedDt: LocalDateTime? = null,
+    ) : BaseDateTimeEntity(createdDt, updatedDt) {
 
 }

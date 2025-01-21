@@ -2,9 +2,10 @@ package com.mall.choisinsa.common.fixture.entity.member
 
 import com.mall.choisinsa.common.enumeration.MemberStatus
 import com.mall.choisinsa.domain.member.Member
+import java.time.LocalDateTime
 
 class MemberFixture {
-    var id: Long = Long.MAX_VALUE
+    var id: Long? = 1L
     var loginId: String = "test"
     var password: String = "\$2a\$10\$IM3E8XGnR/suQkfeMk0ce.ppJWAByLoLbPS4Pymy749f1EEo/0JWi" // qwe123
     var status: MemberStatus = MemberStatus.NORMAL
@@ -14,7 +15,7 @@ class MemberFixture {
     var phoneNumber: String = "3cLKKmND91F7TMcaS3292Q=="
     var profileFileUrl: String? = "./test_profile_img.png"
 
-    private fun build(): Member {
+    fun build(): Member {
         return Member(
             id = this.id,
             loginId = this.loginId,
@@ -25,10 +26,12 @@ class MemberFixture {
             nickName = this.nickName,
             phoneNumber = this.phoneNumber,
             profileFileUrl  = this.profileFileUrl,
+            createdDt = LocalDateTime.now(),
+            updatedDt = null,
         )
     }
 
-    fun member(block: MemberFixture.() -> Unit): Member {
+    fun build(block: MemberFixture.() -> Unit): Member {
         val builder = MemberFixture()
         builder.apply(block)
         return builder.build()

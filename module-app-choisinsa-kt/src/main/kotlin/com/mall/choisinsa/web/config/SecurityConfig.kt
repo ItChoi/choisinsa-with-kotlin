@@ -37,13 +37,14 @@ class SecurityConfig(
 
         fun getUnsecuredHttpGetMethod(): List<String> {
             return listOf(
-
+                "/h2-console"
             )
         }
 
         fun getUnsecuredHttpPostMethod(): List<String> {
             return listOf(
-                "/api/member/login"
+                "/api/member/login",
+                "/api/member"
             )
         }
     }

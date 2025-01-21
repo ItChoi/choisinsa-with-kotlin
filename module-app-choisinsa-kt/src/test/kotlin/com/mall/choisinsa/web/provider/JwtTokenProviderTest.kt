@@ -4,9 +4,6 @@ import com.mall.choisinsa.common.fixture.entity.member.MemberFixture
 import com.mall.choisinsa.dto.global.MemberDto
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.TestPropertySource
 
 class JwtTokenProviderTest {
 //    @Value("\${jwt.access-token.secret}")
@@ -25,7 +22,7 @@ class JwtTokenProviderTest {
     @DisplayName("정상 토큰 생성")
     fun test() {
         // given
-        val memberDto = MemberDto.of(MemberFixture().member { })
+        val memberDto = MemberDto.of(MemberFixture().build { })
 //        val jwtTokenProvider = JwtTokenProvider()
 //        val generateToken = jwtTokenProvider.generateToken(memberDto.toTokenPayload(), memberDto.username)
 //        println(generateToken)

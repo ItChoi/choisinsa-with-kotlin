@@ -17,14 +17,14 @@ class MemberCertification(
     @Enumerated(EnumType.STRING)
     private val type: MemberCertificationType,
 
-    private val value: String,
+    private val typeValue: String,
 
     private val validTime: LocalDateTime? = null,
 
     @Enumerated(EnumType.STRING)
     private var status: MemberCertificationStatus,
 
-    private val desc: String,
+    private val description: String,
 
-) : BaseDateTimeEntity() {
+    ) : BaseDateTimeEntity() {
 }

@@ -11,15 +11,16 @@ import com.mall.choisinsa.web.exception.GlobalException
 import com.mall.choisinsa.web.provider.JwtTokenProvider
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
 @Service
 class MemberService (
     private val coreMemberService: CoreMemberService,
     private val memberQuerydslRepository: MemberQuerydslRepository,
     private val authenticationProvider: AuthenticationProvider,
     private val jwtTokenProvider: JwtTokenProvider,
+    private val passwordEncoder: PasswordEncoder,
 ) {
 
     @Transactional
@@ -29,11 +30,8 @@ class MemberService (
             throw GlobalException(ExceptionType.ALREADY_EXISTS_MEMBER)
         }
 
+        request.password = encodePassword(request.password)
         coreMemberService.saveMember(request)
-    }
-
-    private fun isExistingMember(request: MemberRequestDto): Boolean {
-        return memberQuerydslRepository.count(request) > 0
     }
 
     @Transactional(readOnly = true)
@@ -47,4 +45,13 @@ class MemberService (
             request.loginId
         )
     }
+
+    private fun isExistingMember(request: MemberRequestDto): Boolean {
+        return memberQuerydslRepository.count(request) > 0
+    }
+
+    private fun encodePassword(rawPassword: String): String {
+        return passwordEncoder.encode(rawPassword)
+    }
 }
+
