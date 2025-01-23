@@ -1,7 +1,7 @@
 package com.mall.choisinsa.web.provider
 
 import com.mall.choisinsa.common.enumeration.TokenType
-import com.mall.choisinsa.dto.response.TokenResponseDto
+import com.mall.choisinsa.member.controller.response.TokenResponseDto
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm

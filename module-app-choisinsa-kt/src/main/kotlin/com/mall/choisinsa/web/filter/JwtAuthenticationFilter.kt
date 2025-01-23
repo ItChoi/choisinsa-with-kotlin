@@ -1,8 +1,8 @@
 package com.mall.choisinsa.web.filter
 
 import com.mall.choisinsa.common.enumeration.TokenType
-import com.mall.choisinsa.dto.global.MemberDto
-import com.mall.choisinsa.service.member.SecurityService
+import com.mall.choisinsa.common.domain.dto.AuthenticatedUser
+import com.mall.choisinsa.member.service.SecurityService
 import com.mall.choisinsa.web.config.SecurityConfig
 import com.mall.choisinsa.web.provider.JwtTokenProvider
 import io.micrometer.common.util.StringUtils
@@ -26,11 +26,11 @@ class JwtAuthenticationFilter(
             val token = getTokenFromHeader(request)
             if (StringUtils.isNotBlank(token)) {
                 val username = jwtTokenProvider.extractUsername(TokenType.ACCESS_TOKEN, token!!)
-                val memberDto: MemberDto = securityService.loadUserByLoginId(username)
+                val authenticatedUser: AuthenticatedUser = securityService.loadUserByLoginId(username)
 
-                if (jwtTokenProvider.isTokenValid(TokenType.ACCESS_TOKEN, token, memberDto.username)) {
+                if (jwtTokenProvider.isTokenValid(TokenType.ACCESS_TOKEN, token, authenticatedUser.username)) {
                     SecurityContextHolder.getContext().setAuthentication(
-                        memberDto.toUsernamePasswordAuthenticationToken()
+                        authenticatedUser.toUsernamePasswordAuthenticationToken()
                     );
                 }
             }

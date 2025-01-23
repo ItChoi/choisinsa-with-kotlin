@@ -1,0 +1,1 @@
+// include::{home_member_login}/index/curl-request.adoc[]

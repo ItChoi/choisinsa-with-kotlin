@@ -1,16 +1,13 @@
 package com.mall.choisinsa.web.provider
 
 import com.mall.choisinsa.common.enumeration.exception.ExceptionType
-import com.mall.choisinsa.dto.global.MemberDto
-import com.mall.choisinsa.dto.request.member.LoginRequestDto
-import com.mall.choisinsa.service.member.SecurityService
+import com.mall.choisinsa.common.domain.dto.AuthenticatedUser
+import com.mall.choisinsa.member.service.SecurityService
 import com.mall.choisinsa.web.exception.GlobalException
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationProvider
-import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
@@ -28,7 +25,7 @@ class CustomAuthenticationProvider(
         return UsernamePasswordAuthenticationToken::class.java.isAssignableFrom(authentication)
     }
 
-    private fun loadUserByUsername(authentication: Authentication): MemberDto {
+    private fun loadUserByUsername(authentication: Authentication): AuthenticatedUser {
         val loginId = authentication.principal.toString()
         val password = authentication.credentials.toString()
 

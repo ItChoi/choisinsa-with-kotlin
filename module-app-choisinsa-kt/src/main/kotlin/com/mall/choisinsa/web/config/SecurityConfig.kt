@@ -1,7 +1,7 @@
 package com.mall.choisinsa.web.config
 
 import com.mall.choisinsa.common.enumeration.exception.ExceptionType
-import com.mall.choisinsa.service.member.SecurityService
+import com.mall.choisinsa.member.service.SecurityService
 import com.mall.choisinsa.web.exception.GlobalException
 import com.mall.choisinsa.web.filter.JwtAuthenticationFilter
 import com.mall.choisinsa.web.provider.JwtTokenProvider
@@ -37,7 +37,8 @@ class SecurityConfig(
 
         fun getUnsecuredHttpGetMethod(): List<String> {
             return listOf(
-                "/h2-console"
+                "/h2-console",
+                "/docs/**",
             )
         }
 
@@ -61,7 +62,7 @@ class SecurityConfig(
                 authorize(anyRequest, authenticated)
             }
 
-            formLogin {  }
+            formLogin { disable() }
             csrf { disable() }
             httpBasic { disable() }
 

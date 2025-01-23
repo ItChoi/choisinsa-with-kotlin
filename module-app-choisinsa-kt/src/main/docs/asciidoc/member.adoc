@@ -1,0 +1,10 @@
+// :operation-http-request-title: Example request
+// :operation-http-response-title: Example request
+// :operation-path-parameters-title: Example request
+// :operation-response-fields-title: Example request
+
+=== 로그인
+include::{snippets}/home_member_login/http-request.adoc[]
+include::{snippets}/home_member_login/http-response.adoc[]
+include::{snippets}/home_member_login/response-fields.adoc[]
+

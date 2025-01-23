@@ -1,6 +1,6 @@
 package com.mall.choisinsa.common.fixture.request.member
 
-import com.mall.choisinsa.dto.request.member.LoginRequestDto
+import com.mall.choisinsa.member.domain.dto.request.LoginRequestDto
 
 data class LoginRequestFixture(
     var loginId: String = "test123",
