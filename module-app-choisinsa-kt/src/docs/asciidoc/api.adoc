@@ -1,0 +1,14 @@
+= 모든 API 문서
+itchoi <itchoi0429@gmail.com>
+:description: 모든 API 명세
+:sectanchors:
+:url-repo: https://github.com/ItChoi/choisinsa-with-kotlin
+:toc:
+:toc-title: API 목록
+:toc: left
+:toclevels: 2
+
+API
+
+// 회원
+include::member.adoc[]

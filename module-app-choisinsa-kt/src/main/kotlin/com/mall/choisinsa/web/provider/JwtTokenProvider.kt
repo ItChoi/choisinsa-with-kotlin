@@ -104,13 +104,11 @@ class JwtTokenProvider(
         }
     }
 
-    fun isTokenValid(
+    fun isValidToken(
         type: TokenType,
         token: String,
-        loginId: String,
     ): Boolean {
-        val username = extractUsername(type, token)
-        return username == loginId && !isTokenExpired(type, token)
+        return !isTokenExpired(type, token)
     }
 
     private fun isTokenExpired(

@@ -2,8 +2,10 @@ package com.mall.choisinsa.web.filter
 
 import com.mall.choisinsa.common.enumeration.TokenType
 import com.mall.choisinsa.common.domain.dto.AuthenticatedUser
+import com.mall.choisinsa.common.enumeration.exception.ExceptionType
 import com.mall.choisinsa.member.service.SecurityService
 import com.mall.choisinsa.web.config.SecurityConfig
+import com.mall.choisinsa.web.exception.GlobalException
 import com.mall.choisinsa.web.provider.JwtTokenProvider
 import io.micrometer.common.util.StringUtils
 import jakarta.servlet.FilterChain
@@ -22,24 +24,21 @@ class JwtAuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        if (!SecurityConfig.isPermit(request.method, request.requestURI)) {
-            val token = getTokenFromHeader(request)
-            if (StringUtils.isNotBlank(token)) {
-                val username = jwtTokenProvider.extractUsername(TokenType.ACCESS_TOKEN, token!!)
-                val authenticatedUser: AuthenticatedUser = securityService.loadUserByLoginId(username)
-
-                if (jwtTokenProvider.isTokenValid(TokenType.ACCESS_TOKEN, token, authenticatedUser.username)) {
-                    SecurityContextHolder.getContext().setAuthentication(
-                        authenticatedUser.toUsernamePasswordAuthenticationToken()
-                    );
-                }
-            }
+        val token = getTokenFromHeader(request)
+        if (StringUtils.isBlank(token) && !jwtTokenProvider.isValidToken(TokenType.ACCESS_TOKEN, token)) {
+            throw GlobalException(ExceptionType.INVALID_JWT_TOKEN)
         }
+
+        val username = jwtTokenProvider.extractUsername(TokenType.ACCESS_TOKEN, token)
+        val authenticatedUser: AuthenticatedUser = securityService.loadUserByLoginId(username)
+        SecurityContextHolder.getContext().setAuthentication(
+            authenticatedUser.toUsernamePasswordAuthenticationToken()
+        );
 
         filterChain.doFilter(request, response);
     }
 
-    private fun getTokenFromHeader(request: HttpServletRequest): String? {
+    private fun getTokenFromHeader(request: HttpServletRequest): String {
         val AUTHORIZATION = "Authorization"
         val AUTHORIZATION_BEARER = "Bearer ";
 
@@ -47,6 +46,6 @@ class JwtAuthenticationFilter(
         return authorization
             ?.takeIf { it.startsWith(AUTHORIZATION_BEARER) }
             ?.removePrefix(AUTHORIZATION_BEARER)
-            //?: throw GlobalException(ExceptionType.INVALID_JWT_TOKEN)
+            ?: throw GlobalException(ExceptionType.INVALID_JWT_TOKEN)
     }
 }
