@@ -36,6 +36,7 @@ dependencies {
     // oauth2
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
+
     runtimeOnly("com.h2database:h2:1.4.200")
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
@@ -67,3 +68,6 @@ tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
     }
 }
 
+tasks.jar {
+    enabled = false
+}
