@@ -1,0 +1,5 @@
+project-management
+.gradle
+.idea
+.gitattributes
+.gitignore

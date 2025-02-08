@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
     id("org.asciidoctor.jvm.convert") version "3.3.2"
     kotlin("plugin.jpa") version "1.9.25"
@@ -11,7 +13,10 @@ extra["snippetsDir"] = file("build/generated-snippets")
 val asciidoctorExt by configurations.creating
 
 
+
 dependencies {
+    // asciidoctor
+    asciidoctorExt("org.springframework.restdocs:spring-restdocs-asciidoctor")
     implementation(project(":module-core-kt"))
     implementation(project(":module-common-kt"))
 
@@ -41,8 +46,6 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("org.springframework.security:spring-security-test")
-
-    asciidoctorExt("org.springframework.restdocs:spring-restdocs-asciidoctor")
 }
 
 allOpen {
@@ -61,9 +64,19 @@ tasks.asciidoctor {
     dependsOn(tasks.test)
 }
 
-tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
-    dependsOn("asciidoctor") // asciidoctor 태스크 실행 후 실행되도록 의존성 추가
-    from(tasks.named("asciidoctor").map { it.outputs.files.singleFile }) { // asciidoctor 출력 디렉터리 동적으로 참조
+// TODO
+tasks.register<Copy>("copyDocument") { // (5)
+    dependsOn(tasks.named("asciidoctor"))
+    from(file("build/docs/asciidoc"))
+    into(file("src/main/resources/static/docs"))
+}
+
+tasks.named<BootJar>("bootJar") {
+    dependsOn(tasks.named("asciidoctor")) // asciidoctor 태스크 실행 후 실행되도록 의존성 추가
+    //dependsOn("asciidoctor") // asciidoctor 태스크 실행 후 실행되도록 의존성 추가
+    //from(tasks.named("asciidoctor").map { it.outputs.files.singleFile }) { // asciidoctor 출력 디렉터리 동적으로 참조
+    //from(tasks.named("asciidoctor").map { it.outputs.files.singleFile }) { // asciidoctor 출력 디렉터리 동적으로 참조
+    from("${tasks.named("asciidoctor").get().outputs.files.singleFile}/html5") { // asciidoctor 출력 디렉터리 동적으로 참조
         into("static/docs") // BootJar 내에 포함될 경로
     }
 }

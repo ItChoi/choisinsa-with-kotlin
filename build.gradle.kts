@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
 	kotlin("jvm") version "1.9.25"
 	kotlin("plugin.spring") version "1.9.25"
@@ -67,11 +69,9 @@ subprojects {
 	}
 }
 
-// ✅ 루트 프로젝트에서 bootJar 비활성화 (하위 모듈에서만 JAR 생성)
-//tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
-//	enabled = false
-//}
-//
 tasks.withType<Jar> {
+	enabled = true
+}
+tasks.withType<BootJar> {
 	enabled = false
 }

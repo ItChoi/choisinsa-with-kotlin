@@ -3,9 +3,13 @@ ENV APP_HOME=choisinsa-with-kotlin
 ENV APP_NAME=module-app-choisinsa-kt
 WORKDIR /${APP_HOME}
 
+COPY gradle gradle
+COPY gradlew build.gradle.kts settings.gradle.kts ./
+
+RUN ./gradlew dependencies
+
 COPY . .
 
-RUN chmod +x ./gradlew
 RUN ./gradlew :module-app-choisinsa-kt:clean :module-app-choisinsa-kt:build
 
 FROM amazoncorretto:17
