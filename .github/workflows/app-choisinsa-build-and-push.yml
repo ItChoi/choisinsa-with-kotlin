@@ -5,7 +5,8 @@ on:
     branches:
       - main
     paths:
-      - 'module-app-choisinsa-kt'
+      - ./
+#      - 'module-app-choisinsa-kt'
 
 jobs:
   build-and-push:
