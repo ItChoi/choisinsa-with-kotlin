@@ -12,6 +12,15 @@ class MemberController (
     private val memberService: MemberService,
 ) {
 
+    @GetMapping("/test")
+    fun test(
+
+    ): ResponseWrapper {
+        return ResponseWrapper.ok(
+            data = "test123123123"
+        )
+    }
+
     @PostMapping("/login")
     fun login(
         @RequestBody request: LoginRequestDto

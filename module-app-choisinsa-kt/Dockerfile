@@ -21,4 +21,8 @@ COPY --from=build /${APP_HOME}/${APP_NAME}/build/libs/*.jar ./${APP_NAME}.jar
 
 EXPOSE 8080
 ENV PROFILE "client"
-CMD ["java", "-jar", "module-app-choisinsa-kt.jar"]
+#CMD ["java", "-jar", "module-app-choisinsa-kt.jar"]
+
+# Remote Jvm Debug -> CMD 주석 후 아래 주석 사용
+EXPOSE 5005
+CMD ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "module-app-choisinsa-kt.jar"]

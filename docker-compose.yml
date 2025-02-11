@@ -1,0 +1,75 @@
+version: '3.9'
+x-database-common:
+  environment:
+    &mysql-environment
+    MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    MYSQL_DATABASE: ${MYSQL_DATABASE}
+    MYSQL_USER: ${MYSQL_USER}
+    MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+services:
+  choisinsa-admin-app-kt:
+    image: itchoi0429/choisinsa-admin-app-kt:1.0.0
+    build:
+      context: .
+      dockerfile: module-app-admin-kt/Dockerfile
+    ports:
+      - 8081:8081
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1GB
+    networks:
+      - choisinsa-app-network
+    depends_on:
+      - choisinsa-mysql
+      - choisinsa-redis
+    restart: on-failure
+  choisinsa-client-app-kt:
+    image: itchoi0429/choisinsa-client-app-kt:1.0.0
+    build:
+      context: .
+      dockerfile: module-app-choisinsa-kt/Dockerfile
+    ports:
+      - 8080:8080
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2GB
+    networks:
+      - choisinsa-app-network
+    depends_on:
+      - choisinsa-mysql
+      - choisinsa-redis
+    restart: on-failure
+  choisinsa-mysql:
+    image: itchoi0429/choisinsa-mysql:1.0.0
+    env_file:
+      - .env
+    ports:
+      - ${MYSQL_CLIENT_PORT}:${MYSQL_SERVER_PORT}
+    environment:
+      <<: *mysql-environment
+    networks:
+      - choisinsa-app-network
+    volumes:
+      - choisinsa-mysql-volume:/var/lib/mysql
+    restart: always
+  choisinsa-redis:
+    image: itchoi0429/choisinsa-redis:1.0.0
+    env_file:
+      - .env
+    ports:
+      - ${REDIS_CLIENT_PORT}:${REDIS_SERVER_PORT}
+    networks:
+      - choisinsa-app-network
+    volumes:
+      - choisinsa-redis-volume:/data
+    restart: always
+
+volumes:
+  choisinsa-mysql-volume:
+  choisinsa-redis-volume:
+
