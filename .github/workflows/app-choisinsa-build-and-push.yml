@@ -1,11 +1,11 @@
-name: Github Actions - Backend
+name: Github Actions - ChoiSinSa Backend
 
 on:
   push:
     branches:
       - main
-    paths:
-      - 'choisinsa-with-kotlin'
+#    paths:
+#      - 'choisinsa-with-kotlin'
 #      - 'module-app-choisinsa-kt'
 
 jobs:

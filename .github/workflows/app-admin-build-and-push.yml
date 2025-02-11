@@ -1,4 +1,4 @@
-name: Github Actions - Backend
+name: Github Actions - Admin Backend
 
 on:
   push:
