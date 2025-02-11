@@ -17,7 +17,7 @@ class MemberController (
 
     ): ResponseWrapper {
         return ResponseWrapper.ok(
-            data = "test123123123123123123"
+            data = "test1231231231231231233333"
         )
     }
 
