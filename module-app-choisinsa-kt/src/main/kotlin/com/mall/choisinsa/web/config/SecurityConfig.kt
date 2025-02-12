@@ -53,8 +53,6 @@ class SecurityConfig(
                 getUnsecuredHttpGetMethod().forEach { authorize(HttpMethod.GET, it, permitAll) }
                 getUnsecuredHttpPostMethod().forEach { authorize(HttpMethod.POST, it, permitAll) }
 
-                // TODO: 테스트용, 삭제 예정
-                authorize("/**", permitAll)
                 authorize(anyRequest, authenticated)
             }
 

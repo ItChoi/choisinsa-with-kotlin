@@ -13,9 +13,11 @@ class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(GlobalException::class)
     fun errorTypeExHandler(e: GlobalException): ResponseWrapper {
+        val exceptionType = e.exceptionType
         return ResponseWrapper.error(
             HttpStatus.BAD_REQUEST,
-            e.exceptionType,
+            exceptionType,
+            exceptionType.msg
         )
     }
 }

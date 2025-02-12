@@ -1,22 +1,18 @@
+import org.asciidoctor.gradle.jvm.AsciidoctorTask
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-    id("org.asciidoctor.jvm.convert") version "3.3.2"
+    id("org.asciidoctor.jvm.convert") version "4.0.3"
     kotlin("plugin.jpa") version "1.9.25"
 }
 
 group = "choisinsa.module-app-choisinsa-kt"
 version = "0.0.1-SNAPSHOT"
 
-extra["snippetsDir"] = file("build/generated-snippets")
-
-val asciidoctorExt by configurations.creating
-
-
+val asciidoctorExt: Configuration by configurations.creating
+val snippetsDir by extra { file("build/generated-snippets") }
 
 dependencies {
-    // asciidoctor
-    asciidoctorExt("org.springframework.restdocs:spring-restdocs-asciidoctor")
     implementation(project(":module-core-kt"))
     implementation(project(":module-common-kt"))
 
@@ -41,10 +37,12 @@ dependencies {
     // oauth2
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
+    // asciidoctor
+    asciidoctorExt("org.springframework.restdocs:spring-restdocs-asciidoctor")
+    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 
     runtimeOnly("com.h2database:h2:1.4.200")
     runtimeOnly("com.mysql:mysql-connector-j")
-    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("org.springframework.security:spring-security-test")
 }
 
@@ -54,33 +52,42 @@ allOpen {
     annotation("jakarta.persistence.Embeddable")
 }
 
-tasks.test {
-    outputs.dir(project.extra["snippetsDir"]!!)
-}
-
-tasks.asciidoctor {
-    inputs.dir(project.extra["snippetsDir"]!!)
-    configurations("asciidoctorExt")
-    dependsOn(tasks.test)
-}
-
-// TODO
-tasks.register<Copy>("copyDocument") { // (5)
-    dependsOn(tasks.named("asciidoctor"))
-    from(file("build/docs/asciidoc"))
-    into(file("src/main/resources/static/docs"))
-}
-
-tasks.named<BootJar>("bootJar") {
-    dependsOn(tasks.named("asciidoctor")) // asciidoctor 태스크 실행 후 실행되도록 의존성 추가
-    //dependsOn("asciidoctor") // asciidoctor 태스크 실행 후 실행되도록 의존성 추가
-    //from(tasks.named("asciidoctor").map { it.outputs.files.singleFile }) { // asciidoctor 출력 디렉터리 동적으로 참조
-    //from(tasks.named("asciidoctor").map { it.outputs.files.singleFile }) { // asciidoctor 출력 디렉터리 동적으로 참조
-    from("${tasks.named("asciidoctor").get().outputs.files.singleFile}/html5") { // asciidoctor 출력 디렉터리 동적으로 참조
-        into("static/docs") // BootJar 내에 포함될 경로
+// Ascii Doc Create Tasks
+tasks {
+    test {
+        outputs.dir(snippetsDir) // 필요 시 명시
     }
-}
 
-tasks.jar {
-    enabled = false
+    // 기존에 존재하는 Docs 삭제(문서 최신화를 위해)
+    clean {
+        delete(file("src/main/resources/static/docs"))
+    }
+
+    asciidoctor {
+        // snippet Directory 설정
+        inputs.dir(snippetsDir)
+        configurations(asciidoctorExt.name)
+        // test 가 성공해야만, 아래 Task 실행
+        dependsOn(test)
+
+        // adoc 개별 파일들의 경로를 baseDir로 설정
+        baseDirFollowsSourceFile()
+    }
+
+    // Ascii Doc 파일 생성
+    copy {
+        from("build/docs/asciidoc")
+        into("src/main/resources/static/docs")
+    }
+
+    jar {
+        enabled = false
+    }
+
+    bootJar {
+        dependsOn(asciidoctor)
+        from ("build/docs/asciidoc") {
+            into("static/docs")
+        }
+    }
 }

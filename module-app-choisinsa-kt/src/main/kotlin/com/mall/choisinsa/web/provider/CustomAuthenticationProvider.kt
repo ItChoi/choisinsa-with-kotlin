@@ -15,11 +15,19 @@ class CustomAuthenticationProvider(
     private val securityService: SecurityService,
     private val passwordEncoder: PasswordEncoder,
 ) : AuthenticationProvider {
-    override fun authenticate(authentication: Authentication): Authentication {
+
+    override fun authenticate(
+        authentication: Authentication
+    ): Authentication {
         require(supports(authentication::class.java))
-        val memberDto = loadUserByUsername(authentication)
-        return memberDto.toUsernamePasswordAuthenticationToken()
+        val authenticatedUser = loadUserByUsername(authentication)
+        return authenticatedUser.toUsernamePasswordAuthenticationToken()
     }
+
+    fun Authentication.toAuthenticatedUser(): AuthenticatedUser {
+        return this.principal as AuthenticatedUser
+    }
+
 
     override fun supports(authentication: Class<*>): Boolean {
         return UsernamePasswordAuthenticationToken::class.java.isAssignableFrom(authentication)

@@ -1,15 +1,16 @@
-version: '3.9'
+version: '3.8'
 x-database-common:
   environment:
     &mysql-environment
     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     MYSQL_DATABASE: ${MYSQL_DATABASE}
-    MYSQL_USER: ${MYSQL_USER}
-    MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+#    MYSQL_USER: ${MYSQL_USER}
+#    MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
 services:
   choisinsa-admin-app-kt:
-    image: itchoi0429/choisinsa-admin-app-kt:1.0.0
+    image: itchoi0429/choisinsa-admin-app-kt:1.0
+    container_name: choisinsa-admin-app-kt
     build:
       context: .
       dockerfile: module-app-admin-kt/Dockerfile
@@ -27,7 +28,8 @@ services:
       - choisinsa-redis
     restart: on-failure
   choisinsa-client-app-kt:
-    image: itchoi0429/choisinsa-client-app-kt:1.0.0
+    image: itchoi0429/choisinsa-client-app-kt:1.0
+    container_name: choisinsa-client-app-kt
     build:
       context: .
       dockerfile: module-app-choisinsa-kt/Dockerfile
@@ -45,7 +47,8 @@ services:
       - choisinsa-redis
     restart: on-failure
   choisinsa-mysql:
-    image: itchoi0429/choisinsa-mysql:1.0.0
+    image: itchoi0429/choisinsa-mysql:1.0
+    container_name: choisinsa-mysql
     env_file:
       - .env
     ports:
@@ -58,7 +61,8 @@ services:
       - choisinsa-mysql-volume:/var/lib/mysql
     restart: always
   choisinsa-redis:
-    image: itchoi0429/choisinsa-redis:1.0.0
+    image: itchoi0429/choisinsa-redis:1.0
+    container_name: choisinsa-redis
     env_file:
       - .env
     ports:
@@ -71,5 +75,13 @@ services:
 
 volumes:
   choisinsa-mysql-volume:
+    name: choisinsa-mysql-volume
+    external: true
   choisinsa-redis-volume:
+    name: choisinsa-redis-volume
+    external: true
 
+networks:
+  choisinsa-app-network:
+    name: choisinsa-app-network
+    external: true

@@ -3,10 +3,14 @@ ENV APP_HOME=choisinsa-with-kotlin
 ENV APP_NAME=module-app-admin-kt
 WORKDIR /${APP_HOME}
 
+COPY gradle gradle
+COPY gradlew build.gradle.kts settings.gradle.kts ./
+
+RUN ./gradlew dependencies
+
 COPY . .
 
-RUN chmod +x ./gradlew
-RUN ./gradlew :module-app-admin-kt:clean :module-app-admin-kt:build
+RUN ./gradlew :${APP_NAME}:clean :${APP_NAME}:build
 
 FROM amazoncorretto:17
 ENV APP_HOME=choisinsa-with-kotlin
@@ -17,4 +21,8 @@ COPY --from=build /${APP_HOME}/${APP_NAME}/build/libs/*.jar ./${APP_NAME}.jar
 
 EXPOSE 8081
 ENV PROFILE "admin"
-CMD ["java", "-jar", "module-app-admin-kt.jar"]
+#CMD ["sh", "-c", "java -jar ${APP_NAME}.jar"]
+
+# Remote Jvm Debug -> CMD 주석 후 아래 주석 사용
+EXPOSE 5005
+CMD ["sh", "-c", "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -jar ${APP_NAME}.jar"]

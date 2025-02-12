@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: module-redis-kt
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  cache:
+    type: redis
+
+

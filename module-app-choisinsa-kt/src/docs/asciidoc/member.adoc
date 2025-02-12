@@ -5,4 +5,3 @@ include::{snippets}/home_member_login/http-request.adoc[]
 include::{snippets}/home_member_login/request-fields.adoc[]
 include::{snippets}/home_member_login/http-response.adoc[]
 include::{snippets}/home_member_login/response-fields.adoc[]
-

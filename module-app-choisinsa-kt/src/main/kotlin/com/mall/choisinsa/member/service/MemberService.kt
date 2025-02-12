@@ -35,13 +35,15 @@ class MemberService (
     }
 
     @Transactional(readOnly = true)
-    fun login(request: LoginRequestDto): TokenResponseDto {
-        val authenticatedUser = authenticationProvider.authenticate(
+    fun login(
+        request: LoginRequestDto
+    ): TokenResponseDto {
+        val authentication = authenticationProvider.authenticate(
             UsernamePasswordAuthenticationToken(request.loginId, request.password)
-        ).principal as AuthenticatedUser
+        )
 
         return jwtTokenProvider.generateToken(
-            authenticatedUser.toTokenPayload(),
+            authentication,
             request.loginId
         )
     }

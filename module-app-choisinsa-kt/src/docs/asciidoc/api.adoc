@@ -1,7 +1,3 @@
-ifndef::snippets[]
-:snippets: ./build/generated-snippets
-endif::[]
-
 = 모든 API 문서
 itchoi <itchoi0429@gmail.com>
 :description: 모든 API 명세
@@ -14,5 +10,4 @@ itchoi <itchoi0429@gmail.com>
 
 API
 
-// 회원
 include::member.adoc[]

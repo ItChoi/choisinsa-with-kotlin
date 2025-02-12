@@ -1,5 +1,6 @@
 package com.mall.choisinsa.web.provider
 
+import com.mall.choisinsa.common.domain.dto.AuthenticatedUser
 import com.mall.choisinsa.common.enumeration.TokenType
 import com.mall.choisinsa.member.controller.response.TokenResponseDto
 import io.jsonwebtoken.Claims
@@ -8,6 +9,7 @@ import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
 import java.security.Key
 import java.util.*
@@ -34,7 +36,7 @@ class JwtTokenProvider(
      * 3. 리프레시, 액세스 토큰 로직 재사용 리팩토링
      */
 
-    fun generateToken(
+    private fun generateToken(
         type: TokenType,
         extraClaims: MutableMap<String, Any?>,
         loginId: String,
@@ -47,13 +49,25 @@ class JwtTokenProvider(
     }
 
     fun generateToken(
-        extraClaims: MutableMap<String, Any?>,
+        authentication: Authentication,
         loginId: String,
     ): TokenResponseDto {
+        val extraClaims = toAuthenticatedUser(authentication).toTokenPayload()
+
         return TokenResponseDto(
             generateToken(TokenType.ACCESS_TOKEN, extraClaims, loginId),
             generateToken(TokenType.REFRESH_TOKEN, extraClaims, loginId),
         )
+    }
+
+    private fun toAuthenticatedUser(
+        authentication: Authentication,
+    ): AuthenticatedUser {
+        require(authentication != null
+                && authentication.principal != null
+                && authentication.principal is AuthenticatedUser)
+
+        return authentication as AuthenticatedUser
     }
 
     private fun buildToken(

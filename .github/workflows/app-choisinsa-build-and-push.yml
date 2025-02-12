@@ -14,7 +14,7 @@ jobs:
 
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v2 # 현재 리포지토리 체크아웃
+      uses: actions/checkout@v4 # 현재 리포지토리 체크아웃
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1 # Docker Buildx 설정
@@ -28,7 +28,7 @@ jobs:
     - name: Build and Push
       uses: docker/build-push-action@v2
       with:
-        context: ../../ # build context
+        context: . # build context
         file: ./module-app-choisinsa-kt/Dockerfile # Dockerfile 경로
         push: true # 이미지를 레지스트리에 푸시
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/module-app-choisinsa-kt:${{ github.sha }} # commit id 활용 - 이미지 태그를 통해 어떤 소스로 반영된 버전인지 체크 가능

@@ -10,7 +10,7 @@ RUN ./gradlew dependencies
 
 COPY . .
 
-RUN ./gradlew :module-app-choisinsa-kt:clean :module-app-choisinsa-kt:build
+RUN ./gradlew :${APP_NAME}:clean :${APP_NAME}:build
 
 FROM amazoncorretto:17
 ENV APP_HOME=choisinsa-with-kotlin
@@ -21,8 +21,8 @@ COPY --from=build /${APP_HOME}/${APP_NAME}/build/libs/*.jar ./${APP_NAME}.jar
 
 EXPOSE 8080
 ENV PROFILE "client"
-#CMD ["java", "-jar", "module-app-choisinsa-kt.jar"]
+#CMD ["sh", "-c", "java -jar ${APP_NAME}.jar"]
 
 # Remote Jvm Debug -> CMD 주석 후 아래 주석 사용
 EXPOSE 5005
-CMD ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "module-app-choisinsa-kt.jar"]
+CMD ["sh", "-c", "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -jar ${APP_NAME}.jar"]
