@@ -18,6 +18,6 @@ class CoreMemberRepositoryImpl(
     }
 
     override fun save(member: Member): Member {
-        return  coreMemberJpaRepository.save(MemberEntity.from(member)).toModel()
+        return coreMemberJpaRepository.save(MemberEntity.from(member)).toModel()
     }
 }

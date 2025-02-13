@@ -9,8 +9,8 @@ group = "choisinsa.module-core-kt"
 version = "0.0.1-SNAPSHOT"
 
 dependencies {
-//    implementation(project(":module-redis-kt"))
-//    implementation(project(":module-common-kt"))
+    implementation(project(":module-redis-kt"))
+    implementation(project(":module-common-kt"))
 
     // QueryDSL 의존성 추가
     //implementation("org.springframework.boot:spring-boot-starter-web")

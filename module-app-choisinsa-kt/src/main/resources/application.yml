@@ -4,7 +4,7 @@ server:
 spring:
   profiles:
     active: client
-    include: database, jwt, oauth
+    include: database, jwt, oauth, redis, crypto
 
 ---
 

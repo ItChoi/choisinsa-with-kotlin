@@ -31,9 +31,7 @@ class MemberEntity(
 
     private val lastLoginDt: LocalDateTime? = null,
 
-    createdDt: LocalDateTime? = null,
-    updatedDt: LocalDateTime? = null,
-    ) : BaseDateTimeEntity(createdDt, updatedDt) {
+) : BaseDateTimeEntity() {
 
     companion object {
         fun from(
@@ -50,8 +48,6 @@ class MemberEntity(
                 phoneNumber = member.phoneNumber,
                 profileFileUrl = member.profileFileUrl,
                 lastLoginDt = member.lastLoginDt,
-                createdDt = member.createdDt,
-                updatedDt = member.updatedDt
             )
         }
     }

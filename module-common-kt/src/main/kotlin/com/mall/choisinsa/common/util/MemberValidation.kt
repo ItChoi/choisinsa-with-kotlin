@@ -28,5 +28,11 @@ class MemberValidation {
             return Validation.areAllNotBlank(email)
                     && regex.matches(email!!)
         }
+        
+        fun isValidPhoneNumber(phoneNumber: String?): Boolean {
+            val regex = Regex("^(010-\\d{4}-\\d{4}|010\\d{8})$")
+            return Validation.areAllNotBlank(phoneNumber)
+                    && regex.matches(phoneNumber!!)
+        }
     }
 }

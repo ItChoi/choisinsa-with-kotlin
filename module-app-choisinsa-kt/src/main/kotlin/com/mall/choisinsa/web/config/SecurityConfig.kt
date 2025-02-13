@@ -1,5 +1,6 @@
 package com.mall.choisinsa.web.config
 
+import com.mall.choisinsa.common.domain.BaseDateTimeEntity
 import com.mall.choisinsa.member.service.SecurityService
 import com.mall.choisinsa.web.filter.JwtAuthenticationFilter
 import com.mall.choisinsa.web.provider.JwtTokenProvider
@@ -13,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import java.time.LocalDateTime
 
 @EnableWebSecurity
 @Configuration

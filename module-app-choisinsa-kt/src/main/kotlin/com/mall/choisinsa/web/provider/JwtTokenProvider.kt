@@ -36,28 +36,18 @@ class JwtTokenProvider(
      * 3. 리프레시, 액세스 토큰 로직 재사용 리팩토링
      */
 
-    private fun generateToken(
+    fun generateToken(
         type: TokenType,
-        extraClaims: MutableMap<String, Any?>,
+        authentication: Authentication,
         loginId: String,
     ): String {
+
+        val extraClaims = toAuthenticatedUser(authentication).toTokenPayload()
         return buildToken(
             type,
             extraClaims,
             loginId,
         );
-    }
-
-    fun generateToken(
-        authentication: Authentication,
-        loginId: String,
-    ): TokenResponseDto {
-        val extraClaims = toAuthenticatedUser(authentication).toTokenPayload()
-
-        return TokenResponseDto(
-            generateToken(TokenType.ACCESS_TOKEN, extraClaims, loginId),
-            generateToken(TokenType.REFRESH_TOKEN, extraClaims, loginId),
-        )
     }
 
     private fun toAuthenticatedUser(
@@ -66,8 +56,7 @@ class JwtTokenProvider(
         require(authentication != null
                 && authentication.principal != null
                 && authentication.principal is AuthenticatedUser)
-
-        return authentication as AuthenticatedUser
+        return authentication.principal as AuthenticatedUser
     }
 
     private fun buildToken(

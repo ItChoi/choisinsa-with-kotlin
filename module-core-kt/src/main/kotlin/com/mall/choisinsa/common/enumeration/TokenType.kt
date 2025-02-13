@@ -5,6 +5,4 @@ enum class TokenType(
 ) {
     ACCESS_TOKEN("액세스 토큰"),
     REFRESH_TOKEN("리프레시 토큰"),
-
-
 }

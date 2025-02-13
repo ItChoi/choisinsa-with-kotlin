@@ -15,6 +15,7 @@ val snippetsDir by extra { file("build/generated-snippets") }
 dependencies {
     implementation(project(":module-core-kt"))
     implementation(project(":module-common-kt"))
+    implementation(project(":module-redis-kt"))
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-authorization-server")
@@ -40,6 +41,12 @@ dependencies {
     // asciidoctor
     asciidoctorExt("org.springframework.restdocs:spring-restdocs-asciidoctor")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+
+    // AWS KMS SDK
+    //implementation("software.amazon.awssdk:kms:2.20.0")
+
+    // Kotlin standard + Jackson or any other libraries
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     runtimeOnly("com.h2database:h2:1.4.200")
     runtimeOnly("com.mysql:mysql-connector-j")

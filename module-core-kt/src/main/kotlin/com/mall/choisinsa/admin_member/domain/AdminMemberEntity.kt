@@ -30,5 +30,4 @@ class AdminMemberEntity(
 
     private val phoneNumber: String? = null,
 
-    ) : BaseDateTimeEntity() {
-}
+    )// : BaseDateTimeEntity() { }
