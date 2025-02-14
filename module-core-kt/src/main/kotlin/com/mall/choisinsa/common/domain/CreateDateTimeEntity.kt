@@ -9,10 +9,7 @@ import java.time.LocalDateTime
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
-class BaseDateTimeEntity {
+class CreateDateTimeEntity {
     @CreatedDate
     var createdDt: LocalDateTime? = null
-
-    @LastModifiedDate
-    var updatedDt: LocalDateTime? = null
 }

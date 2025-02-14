@@ -1,8 +1,9 @@
 package com.mall.choisinsa.member.domain
 
+import com.mall.choisinsa.common.enumeration.GenderType
 import com.mall.choisinsa.common.enumeration.MemberStatus
 import com.mall.choisinsa.common.port.ClockHolder
-import com.mall.choisinsa.member.domain.dto.request.MemberRequestDto
+import com.mall.choisinsa.member.domain.dto.request.MemberRequest
 import java.time.LocalDateTime
 
 class Member(
@@ -16,11 +17,16 @@ class Member(
     val phoneNumber: String,
     val profileFileUrl: String? = null,
     val lastLoginDt: LocalDateTime? = null,
+
+    val birthday: String? = null,
+    val gender: GenderType = GenderType.NONE,
+    val selfIntroduce: String? = null,
+
     val createdDt: LocalDateTime? = null,
     val updatedDt: LocalDateTime? = null,
 ) {
     companion object {
-        fun from(request: MemberRequestDto): Member {
+        fun from(request: MemberRequest): Member {
             return Member(
                 loginId = request.loginId,
                 password = request.password,

@@ -1,8 +1,8 @@
 package com.mall.choisinsa.member.controller
 
 import com.mall.choisinsa.common.controller.response.ResponseWrapper
-import com.mall.choisinsa.member.domain.dto.request.LoginRequestDto
-import com.mall.choisinsa.member.domain.dto.request.MemberRequestDto
+import com.mall.choisinsa.member.domain.dto.request.LoginRequest
+import com.mall.choisinsa.member.domain.dto.request.MemberRequest
 import com.mall.choisinsa.member.service.MemberService
 import org.springframework.web.bind.annotation.*
 
@@ -15,7 +15,7 @@ class MemberController (
 
     @PostMapping("/login")
     fun login(
-        @RequestBody request: LoginRequestDto
+        @RequestBody request: LoginRequest
     ): ResponseWrapper {
         return ResponseWrapper.ok(
             data = memberService.login(request)
@@ -24,9 +24,8 @@ class MemberController (
 
     @PostMapping
     fun saveMember(
-        @RequestBody request: MemberRequestDto,
+        @RequestBody request: MemberRequest,
     ): ResponseWrapper {
-        // TODO("이름, 휴대폰번호, 이메일 개인정보 암호화")
         memberService.saveMember(request)
         return ResponseWrapper.ok()
     }

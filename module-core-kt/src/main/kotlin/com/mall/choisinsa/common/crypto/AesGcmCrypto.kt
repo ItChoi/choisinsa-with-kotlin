@@ -1,19 +1,24 @@
 package com.mall.choisinsa.common.crypto
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.security.SecureRandom
+import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.SecretKeySpec
-import java.util.Base64
 
 @Component
 class AesGcmCrypto(
+    private val objectMapper: ObjectMapper = ObjectMapper().registerKotlinModule(),
+
     @Value("\${choisinsa-client-app.crypto.secret-key}")
     private val base64Key: String
 ) {
     companion object {
+        // TODO: yml로 감추기
         private const val AES_ALGORITHM = "AES"
         private const val TRANSFORMATION = "AES/GCM/NoPadding"
         private const val GCM_TAG_LENGTH = 128 // bits
@@ -27,12 +32,28 @@ class AesGcmCrypto(
         }
     }
 
+    fun encrypt(
+        value: String,
+    ): String {
+        return encryptToBase64(
+            objectMapper.writeValueAsString(encrypt(value.toByteArray()))
+        )
+    }
+
+    fun decrypt(
+        value: String,
+    ): String {
+        return decrypt(
+            objectMapper.readValue(decryptFromBase64(value), EncryptedResult::class.java)
+        ).decodeToString()
+    }
+
     /**
      * 암호화
      * @param plainBytes 평문 바이트
      * @return EncryptedResult( cipherText, iv )
      */
-    fun encrypt(plainBytes: ByteArray): EncryptedResult {
+    private fun encrypt(plainBytes: ByteArray): EncryptedResult {
         val secureRandom = SecureRandom()
         val iv = ByteArray(IV_SIZE).apply {
             secureRandom.nextBytes(this)
@@ -48,17 +69,10 @@ class AesGcmCrypto(
         return EncryptedResult(cipherText, iv)
     }
 
-    fun encrypt(
-        value: String,
-    ): String {
-        val result = encrypt(value.toByteArray())
-        return result.cipherText.toString()
-    }
-
     /**
      * 복호화
      */
-    fun decrypt(encryptedResult: EncryptedResult): ByteArray {
+    private fun decrypt(encryptedResult: EncryptedResult): ByteArray {
         val (cipherText, iv) = encryptedResult
 
         val cipher = Cipher.getInstance(TRANSFORMATION)
@@ -69,11 +83,17 @@ class AesGcmCrypto(
         return cipher.doFinal(cipherText)
     }
 
-//    fun decrypt(
-//        value: String,
-//    ): String {
-//        decrypt()
-//    }
+    // Base64 암호화
+    private fun encryptToBase64(plainText: String): String {
+        val encodedBytes = Base64.getEncoder().encode(plainText.toByteArray())
+        return String(encodedBytes) // 다시 문자열로 변환하여 반환
+    }
+
+    // Base64 복호화
+    private fun decryptFromBase64(encryptedText: String): String {
+        val decodedBytes = Base64.getDecoder().decode(encryptedText)
+        return String(decodedBytes)
+    }
 
 }
 

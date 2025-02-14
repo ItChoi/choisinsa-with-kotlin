@@ -1,4 +1,4 @@
-package com.mall.choisinsa.web.exception
+package com.mall.choisinsa.common.exception
 
 import com.mall.choisinsa.common.enumeration.exception.ExceptionType
 

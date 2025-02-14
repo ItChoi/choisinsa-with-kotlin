@@ -1,7 +1,7 @@
 package com.mall.choisinsa.common.controller
 
 import com.mall.choisinsa.common.controller.response.ResponseWrapper
-import com.mall.choisinsa.web.exception.GlobalException
+import com.mall.choisinsa.common.exception.GlobalException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus

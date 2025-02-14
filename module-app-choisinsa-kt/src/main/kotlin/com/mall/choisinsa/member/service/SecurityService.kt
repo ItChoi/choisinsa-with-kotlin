@@ -6,7 +6,7 @@ import com.mall.choisinsa.common.enumeration.exception.ExceptionType
 import com.mall.choisinsa.common.util.MemberValidation
 import com.mall.choisinsa.member.domain.Member
 import com.mall.choisinsa.member.service.port.CoreMemberRepository
-import com.mall.choisinsa.web.exception.GlobalException
+import com.mall.choisinsa.common.exception.GlobalException
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service

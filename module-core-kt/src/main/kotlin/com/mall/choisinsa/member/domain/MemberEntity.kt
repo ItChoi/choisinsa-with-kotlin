@@ -1,6 +1,7 @@
 package com.mall.choisinsa.member.domain
 
 import com.mall.choisinsa.common.domain.BaseDateTimeEntity
+import com.mall.choisinsa.common.enumeration.GenderType
 import com.mall.choisinsa.common.enumeration.MemberStatus
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -19,18 +20,24 @@ class MemberEntity(
     @Enumerated(EnumType.STRING)
     val status: MemberStatus = MemberStatus.NORMAL,
 
-    private val name: String? = null,
-
-    private val email: String,
-
     val nickName: String? = null,
 
-    private val phoneNumber: String,
+    @Enumerated(EnumType.STRING)
+    private val gender: GenderType = GenderType.NONE,
 
     private val profileFileUrl: String? = null,
 
+    private val selfIntroduce: String? = null,
+
     private val lastLoginDt: LocalDateTime? = null,
 
+    private val birthday: String? = null,
+
+    private val phoneNumber: String,
+
+    private val name: String? = null,
+
+    private val email: String,
 ) : BaseDateTimeEntity() {
 
     companion object {
@@ -48,24 +55,30 @@ class MemberEntity(
                 phoneNumber = member.phoneNumber,
                 profileFileUrl = member.profileFileUrl,
                 lastLoginDt = member.lastLoginDt,
+                birthday = member.birthday,
+                gender = member.gender,
+                selfIntroduce = member.selfIntroduce
             )
         }
     }
 
     fun toModel(): Member {
         return Member(
-            id = id,
-            loginId = loginId,
-            password = password,
-            status = status,
-            name = name,
-            email = email,
-            nickName = nickName,
-            phoneNumber = phoneNumber,
-            profileFileUrl = profileFileUrl,
-            lastLoginDt = lastLoginDt,
-            createdDt = createdDt,
-            updatedDt = updatedDt,
+            id = this.id,
+            loginId = this.loginId,
+            password = this.password,
+            status = this.status,
+            name = this.name,
+            email = this.email,
+            nickName = this.nickName,
+            phoneNumber = this.phoneNumber,
+            profileFileUrl = this.profileFileUrl,
+            lastLoginDt = this.lastLoginDt,
+            birthday = this.birthday,
+            gender = this.gender,
+            selfIntroduce = this.selfIntroduce,
+            createdDt = this.createdDt,
+            updatedDt = this.updatedDt,
         )
     }
 }

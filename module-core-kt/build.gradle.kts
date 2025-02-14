@@ -21,6 +21,8 @@ dependencies {
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
 
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.core:jackson-databind")
     //testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     //testImplementation("org.springframework.security:spring-security-test")
 }

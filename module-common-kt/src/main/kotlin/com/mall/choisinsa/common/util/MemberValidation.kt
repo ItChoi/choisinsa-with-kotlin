@@ -1,6 +1,7 @@
 package com.mall.choisinsa.common.util
 
 class MemberValidation {
+
     companion object {
         /**
          * @param loginId -> 영문, 숫자 5 ~ 11자

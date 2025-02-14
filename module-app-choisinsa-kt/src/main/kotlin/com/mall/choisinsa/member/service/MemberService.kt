@@ -4,18 +4,16 @@ import com.mall.choisinsa.common.crypto.AesGcmCrypto
 import com.mall.choisinsa.common.enumeration.exception.ExceptionType
 import com.mall.choisinsa.common.enumeration.RedisDataFormat
 import com.mall.choisinsa.common.enumeration.TokenType
-import com.mall.choisinsa.common.util.MemberValidation
-import com.mall.choisinsa.member.domain.dto.request.LoginRequestDto
-import com.mall.choisinsa.member.domain.dto.request.MemberRequestDto
+import com.mall.choisinsa.member.domain.dto.request.LoginRequest
+import com.mall.choisinsa.member.domain.dto.request.MemberRequest
 import com.mall.choisinsa.member.controller.response.TokenResponseDto
 import com.mall.choisinsa.member.infrastructure.MemberQuerydslRepository
 import com.mall.choisinsa.service.RedisService
-import com.mall.choisinsa.web.exception.GlobalException
+import com.mall.choisinsa.common.exception.GlobalException
 import com.mall.choisinsa.web.provider.JwtTokenProvider
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
-import org.springframework.security.crypto.codec.Utf8
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -31,28 +29,16 @@ class MemberService (
 ) {
 
     @Transactional
-    fun saveMember(request: MemberRequestDto) {
-        require(request.isValid()) { GlobalException(ExceptionType.INVALID_REQUEST) }
-        if (isExistingMember(request)) {
-            throw GlobalException(ExceptionType.ALREADY_EXISTS_MEMBER)
-        }
+    fun saveMember(request: MemberRequest) {
+        validate(request)
 
-        //request.password = encodePassword(request.password)
         encodePrivacy(request)
         coreMemberService.saveMember(request)
     }
 
-    private fun encodePrivacy(
-        request: MemberRequestDto
-    ) {
-        request.password = passwordEncoder.encode(request.password)
-        request.email = aesGcmCrypto.encrypt(request.email)
-        request.phoneNumber = aesGcmCrypto.encrypt(request.phoneNumber)
-    }
-
     @Transactional(readOnly = true)
     fun login(
-        request: LoginRequestDto
+        request: LoginRequest
     ): TokenResponseDto {
         val loginId = request.loginId
         val authentication = authenticationProvider.authenticate(
@@ -103,12 +89,22 @@ class MemberService (
         return token
     }
 
-    private fun isExistingMember(request: MemberRequestDto): Boolean {
+    private fun isExistingMember(request: MemberRequest): Boolean {
         return memberQuerydslRepository.count(request) > 0
     }
 
-    private fun encodePassword(rawPassword: String): String {
-        return passwordEncoder.encode(rawPassword)
+    private fun validate(request: MemberRequest) {
+        if (!request.isValid()) throw GlobalException(ExceptionType.INVALID_REQUEST)
+        if (isExistingMember(request)) throw GlobalException(ExceptionType.ALREADY_EXISTS_MEMBER)
     }
+
+    private fun encodePrivacy(
+        request: MemberRequest
+    ) {
+        request.password = passwordEncoder.encode(request.password)
+        request.email = aesGcmCrypto.encrypt(request.email)
+        request.phoneNumber = aesGcmCrypto.encrypt(request.phoneNumber)
+    }
+
 }
 

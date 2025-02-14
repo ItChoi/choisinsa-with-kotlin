@@ -5,7 +5,7 @@ import com.mall.choisinsa.common.domain.dto.AuthenticatedUser
 import com.mall.choisinsa.common.enumeration.exception.ExceptionType
 import com.mall.choisinsa.member.service.SecurityService
 import com.mall.choisinsa.web.config.SecurityConfig
-import com.mall.choisinsa.web.exception.GlobalException
+import com.mall.choisinsa.common.exception.GlobalException
 import com.mall.choisinsa.web.provider.JwtTokenProvider
 import io.micrometer.common.util.StringUtils
 import jakarta.servlet.FilterChain

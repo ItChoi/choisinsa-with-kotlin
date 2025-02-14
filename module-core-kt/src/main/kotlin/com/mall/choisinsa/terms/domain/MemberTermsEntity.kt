@@ -1,5 +1,6 @@
 package com.mall.choisinsa.terms.domain
 
+import com.mall.choisinsa.common.domain.BaseDateTimeEntity
 import com.mall.choisinsa.common.enumeration.terms.TermsKind
 import com.mall.choisinsa.common.enumeration.terms.TermsStatus
 import com.mall.choisinsa.common.enumeration.terms.TermsType
@@ -10,20 +11,58 @@ import jakarta.persistence.*
 class MemberTermsEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long? = null,
+    val id: Long? = null,
+
+    val parentId: Long?,
+
+    val depth: Int,
+
+    val displayOrder: Int,
 
     @Enumerated(EnumType.STRING)
-    private val type: TermsType,
+    val type: TermsType,
 
     @Enumerated(EnumType.STRING)
-    private val status: TermsStatus,
+    val status: TermsStatus,
 
     @Enumerated(EnumType.STRING)
-    private val kind: TermsKind,
+    val kind: TermsKind,
 
-    private val title: String,
+    val title: String,
 
-    private val content: String,
-) {
+    val content: String,
+) : BaseDateTimeEntity() {
+
+    companion object {
+        fun from(
+            memberTerms: MemberTerms
+        ): MemberTermsEntity {
+            return MemberTermsEntity(
+                id = memberTerms.id,
+                parentId = memberTerms.parentId,
+                depth = memberTerms.depth,
+                displayOrder = memberTerms.displayOrder,
+                type = memberTerms.type,
+                status = memberTerms.status,
+                kind = memberTerms.kind,
+                title = memberTerms.title,
+                content = memberTerms.content
+            )
+        }
+    }
+
+    fun toModel(): MemberTerms {
+        return MemberTerms(
+            id = this.id,
+            parentId = this.parentId,
+            depth = this.depth,
+            displayOrder = this.displayOrder,
+            type = this.type,
+            status = this.status,
+            kind = this.kind,
+            title = this.title,
+            content = this.content,
+        )
+    }
 
 }

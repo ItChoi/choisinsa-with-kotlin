@@ -3,7 +3,7 @@ package com.mall.choisinsa.web.provider
 import com.mall.choisinsa.common.enumeration.exception.ExceptionType
 import com.mall.choisinsa.common.domain.dto.AuthenticatedUser
 import com.mall.choisinsa.member.service.SecurityService
-import com.mall.choisinsa.web.exception.GlobalException
+import com.mall.choisinsa.common.exception.GlobalException
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken

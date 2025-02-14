@@ -1,6 +1,6 @@
 package com.mall.choisinsa.member.infrastructure
 
-import com.mall.choisinsa.member.domain.dto.request.MemberRequestDto
+import com.mall.choisinsa.member.domain.dto.request.MemberRequest
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
 import com.mall.choisinsa.member.domain.QMemberEntity.memberEntity as member
@@ -11,7 +11,7 @@ class MemberQuerydslRepository(
     private val queryFactory: JPAQueryFactory,
 ) {
 
-    fun count(request: MemberRequestDto): Int {
+    fun count(request: MemberRequest): Int {
         return queryFactory
             .select(member.id)
             .from(member)
