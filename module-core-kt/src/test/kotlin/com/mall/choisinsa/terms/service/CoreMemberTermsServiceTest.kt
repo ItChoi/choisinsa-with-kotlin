@@ -1,5 +1,6 @@
 package com.mall.choisinsa.terms.service
 
+import com.mall.choisinsa.common.fixture.request.terms.MemberTermsRequestFixture
 import com.mall.choisinsa.terms.domain.dto.MemberTermsRequest
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.*
@@ -36,17 +37,5 @@ class CoreMemberTermsServiceTest {
         println(associateBy)
     }
 
-    @Test
-    @DisplayName("")
-    fun test456() {
-        val list1 = listOf(1, 2, 3)
-        val list2 = listOf(2, 3)
-
-        if (list1.containsAll(list2)) {
-            println("true")
-        } else {
-            println("false")
-        }
-    }
 
 }

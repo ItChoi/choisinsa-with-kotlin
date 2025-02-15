@@ -94,7 +94,7 @@ class MemberService (
     }
 
     private fun validate(request: MemberRequest) {
-        if (!request.isValid()) throw GlobalException(ExceptionType.INVALID_REQUEST)
+        if (!request.isValid()) throw GlobalException(ExceptionType.INVALID_INPUT_FORMAT)
         if (isExistingMember(request)) throw GlobalException(ExceptionType.ALREADY_EXISTS_MEMBER)
     }
 

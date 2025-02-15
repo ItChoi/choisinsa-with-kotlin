@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 
-@Table(name = "member terms agreement")
+@Table(name = "member_terms_agreement")
 @Entity
 class MemberTermsAgreementEntity(
     @Id

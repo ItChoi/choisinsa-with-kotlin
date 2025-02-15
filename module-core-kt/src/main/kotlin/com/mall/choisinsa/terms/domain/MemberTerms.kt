@@ -13,7 +13,7 @@ class MemberTerms(
     val status: TermsStatus,
     val kind: TermsKind,
     val title: String,
-    val content: String,
+    val content: String?,
 ) {
 
 }

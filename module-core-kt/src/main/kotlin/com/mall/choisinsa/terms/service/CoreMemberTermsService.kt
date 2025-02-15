@@ -57,9 +57,10 @@ class CoreMemberTermsService(
         }
 
         requests.forEach { request ->
-            val memberTerms = memberTermsWithId.get(request.memberTermsId);
+            val memberTerms = memberTermsWithId.get(request.memberTermsId)
+
             if (memberTerms!!.type === TermsType.REQUIRED && !request.isAgree) {
-                throw GlobalException(ExceptionType.BAD_REQUEST)
+                throw GlobalException(ExceptionType.REQUIRED_ITEM_NOT_PROVIDED)
             }
         }
     }

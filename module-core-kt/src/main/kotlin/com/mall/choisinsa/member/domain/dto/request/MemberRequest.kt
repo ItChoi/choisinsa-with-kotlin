@@ -12,7 +12,7 @@ data class MemberRequest(
     val recommenderLoginId: String? = null,
     var phoneNumber: String,
     val ci: String? = null,
-    val memberTermsRequests: List<MemberTermsRequest>,
+    val memberTermsRequests: MutableList<MemberTermsRequest>?,
 ) {
     fun isValid(): Boolean {
         return MemberValidation.isValidLoginId(this.loginId)

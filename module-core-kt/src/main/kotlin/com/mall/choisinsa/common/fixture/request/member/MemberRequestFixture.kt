@@ -1,6 +1,7 @@
 package com.mall.choisinsa.common.fixture.request.member
 
 import com.mall.choisinsa.common.enumeration.LoginType
+import com.mall.choisinsa.common.fixture.request.terms.MemberTermsRequestFixture
 import com.mall.choisinsa.member.domain.dto.request.MemberRequest
 import com.mall.choisinsa.terms.domain.dto.MemberTermsRequest
 
@@ -12,7 +13,7 @@ data class MemberRequestFixture(
     var recommenderLoginId: String? = "test",
     var phoneNumber: String = "010-0000-0000",
     var ci: String? = null,
-    val memberTermsRequests: List<MemberTermsRequest>? = null,
+    val memberTermsRequests: MutableList<MemberTermsRequest>? = MemberTermsRequestFixture().builds()
 ) {
     fun build(): MemberRequest {
         return MemberRequest(
@@ -31,4 +32,6 @@ data class MemberRequestFixture(
         builder.apply(block)
         return builder.build()
     }
+
+
 }

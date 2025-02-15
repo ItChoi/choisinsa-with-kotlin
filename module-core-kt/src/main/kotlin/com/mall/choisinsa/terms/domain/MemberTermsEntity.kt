@@ -30,7 +30,7 @@ class MemberTermsEntity(
 
     val title: String,
 
-    val content: String,
+    val content: String?,
 ) : BaseDateTimeEntity() {
 
     companion object {
