@@ -50,3 +50,6 @@ sql/**
 **/secret/**
 *.env
 .env
+
+conf/**
+scripts/**

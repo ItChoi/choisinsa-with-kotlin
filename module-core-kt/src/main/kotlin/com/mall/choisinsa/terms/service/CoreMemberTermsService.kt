@@ -22,10 +22,9 @@ class CoreMemberTermsService(
         requests: List<MemberTermsRequest>?,
     ) {
         if (requests.isNullOrEmpty()) return
+        validate(requests)
 
         val memberTermsIds = requests.map { request -> request.memberTermsId }
-        validate(memberTermsIds, requests)
-
         val memberTermsAgreementsWithMemberTermsId = coreMemberTermsAgreementRepository.findAllBy(memberId, memberTermsIds)
             .associateBy { it.memberTermsId }
 
@@ -39,16 +38,16 @@ class CoreMemberTermsService(
             } else {
                 deleteMemberTermsIds.add(request.memberTermsId)
             }
-
-            coreMemberTermsAgreementRepository.deleteBy(memberId, deleteMemberTermsIds)
-            coreMemberTermsAgreementRepository.saveAll(saveMemberTermsAgreements)
         }
+
+        coreMemberTermsAgreementRepository.deleteBy(memberId, deleteMemberTermsIds)
+        coreMemberTermsAgreementRepository.saveAll(saveMemberTermsAgreements)
     }
 
     private fun validate(
-        memberTermsIds: List<Long>,
         requests: List<MemberTermsRequest>
     ) {
+        val memberTermsIds = requests.map { request -> request.memberTermsId }
         val memberTermsWithId = coreMemberTermsRepository.findAll(memberTermsIds)
             .associateBy { it.id }
 
