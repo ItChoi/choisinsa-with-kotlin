@@ -61,8 +61,8 @@ services:
       - choisinsa-app-network
     volumes:
       - choisinsa-mysql-volume:/var/lib/mysql
-      - ./scripts/mysql-master-init.sh:/docker-entrypoint-initdb.d/mysql-master-init.sh
       - ./conf/mysql/master/my.cnf:/etc/mysql/my.cnf
+      - ./scripts/mysql-master-init.sh:/docker-entrypoint-initdb.d/mysql-master-init.sh
     restart: always
 #  choisinsa-mysql-slave-1:
 #    image: itchoi0429/choisinsa-mysql:1.0
@@ -80,8 +80,8 @@ services:
 #      - choisinsa-app-network
 #    volumes:
 #      - choisinsa-mysql-slave1-volume:/var/lib/mysql
-#      - ./scripts/mysql-slave-init.sh:/docker-entrypoint-initdb.d/mysql-slave-init.sh
 #      - ./conf/mysql/slave/my.cnf:/etc/mysql/my.cnf
+#      - ./scripts/mysql-slave-init.sh:/docker-entrypoint-initdb.d/mysql-slave-init.sh
 #    depends_on:
 #      - choisinsa-mysql
 #    restart: always
@@ -101,8 +101,8 @@ services:
       - choisinsa-app-network
     volumes:
       - choisinsa-mysql-slave2-volume:/var/lib/mysql
-      - ./scripts/mysql-slave-init.sh:/docker-entrypoint-initdb.d/mysql-slave-init.sh
       - ./conf/mysql/slave/my.cnf:/etc/mysql/my.cnf
+      - ./scripts/mysql-slave-init.sh:/docker-entrypoint-initdb.d/mysql-slave-init.sh
     depends_on:
       - choisinsa-mysql
     restart: always

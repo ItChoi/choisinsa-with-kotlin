@@ -12,7 +12,7 @@
 CREATE USER 'itchoi'@'%' IDENTIFIED BY '{password}';
 GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'itchoi'@'%';
 
-CREATE USER 'repl_user'@'%' IDENTIFIED WITH caching_sha2_password BY '{password}';
+CREATE USER 'repl_user'@'%' IDENTIFIED WITH BY '{password}';;
 GRANT REPLICATION SLAVE ON *.* TO 'repl_user'@'%';
 FLUSH PRIVILEGES;
 
