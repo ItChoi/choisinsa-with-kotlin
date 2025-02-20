@@ -8,25 +8,25 @@ x-database-common:
 #    MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
 services:
-  choisinsa-admin-app-kt:
-    image: itchoi0429/choisinsa-admin-app-kt:1.0
-    container_name: choisinsa-admin-app-kt
-    build:
-      context: .
-      dockerfile: module-app-admin-kt/Dockerfile
-    ports:
-      - 8081:8081
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1GB
-    networks:
-      - choisinsa-app-network
-    depends_on:
-      - choisinsa-mysql
-      - choisinsa-redis
-    restart: on-failure
+#  choisinsa-admin-app-kt:
+#    image: itchoi0429/choisinsa-admin-app-kt:1.0
+#    container_name: choisinsa-admin-app-kt
+#    build:
+#      context: .
+#      dockerfile: module-app-admin-kt/Dockerfile
+#    ports:
+#      - 8081:8081
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '1'
+#          memory: 1GB
+#    networks:
+#      - choisinsa-app-network
+#    depends_on:
+#      - choisinsa-mysql
+#      - choisinsa-redis
+#    restart: on-failure
   choisinsa-client-app-kt:
     image: itchoi0429/choisinsa-client-app-kt:1.0
     container_name: choisinsa-client-app-kt
@@ -61,30 +61,30 @@ services:
       - choisinsa-app-network
     volumes:
       - choisinsa-mysql-volume:/var/lib/mysql
-      - ./conf/mysql/master/my.cnf:/etc/mysql/my.cnf
+      - ./conf/mysql/master-my.cnf:/etc/mysql/my.cnf
       - ./scripts/mysql-master-init.sh:/docker-entrypoint-initdb.d/mysql-master-init.sh
     restart: always
-#  choisinsa-mysql-slave-1:
-#    image: itchoi0429/choisinsa-mysql:1.0
-#    container_name: choisinsa-mysql-slave-1
-#    env_file:
-#      - .env
-#    ports:
-#      - ${MYSQL_SLAVE_1_PORT}:${MYSQL_CLIENT_PORT}
-#    environment:
-#      <<: *mysql-environment
-#      MYSQL_SERVER_ID: ${MYSQL_SLAVE_1_SERVER_ID}
-#      MYSQL_PORT: ${MYSQL_SLAVE_1_PORT}
-#      MYSQL_MASTER_HOST: ${MYSQL_MASTER_HOST}
-#    networks:
-#      - choisinsa-app-network
-#    volumes:
-#      - choisinsa-mysql-slave1-volume:/var/lib/mysql
-#      - ./conf/mysql/slave/my.cnf:/etc/mysql/my.cnf
-#      - ./scripts/mysql-slave-init.sh:/docker-entrypoint-initdb.d/mysql-slave-init.sh
-#    depends_on:
-#      - choisinsa-mysql
-#    restart: always
+  choisinsa-mysql-slave-1:
+    image: itchoi0429/choisinsa-mysql:1.0
+    container_name: choisinsa-mysql-slave-1
+    env_file:
+      - .env
+    ports:
+      - ${MYSQL_SLAVE_1_PORT}:${MYSQL_CLIENT_PORT}
+    environment:
+      <<: *mysql-environment
+      MYSQL_SERVER_ID: ${MYSQL_SLAVE_1_SERVER_ID}
+      MYSQL_PORT: ${MYSQL_SLAVE_1_PORT}
+      MYSQL_MASTER_HOST: ${MYSQL_MASTER_HOST}
+    networks:
+      - choisinsa-app-network
+    volumes:
+      - choisinsa-mysql-slave1-volume:/var/lib/mysql
+      - ./conf/mysql/slave-1-my.cnf:/etc/mysql/my.cnf
+      - ./scripts/mysql-slave-init.sh:/docker-entrypoint-initdb.d/mysql-slave-init.sh
+    depends_on:
+      - choisinsa-mysql
+    restart: always
   choisinsa-mysql-slave-2:
     image: itchoi0429/choisinsa-mysql:1.0
     container_name: choisinsa-mysql-slave-2
@@ -94,14 +94,11 @@ services:
       - ${MYSQL_SLAVE_2_PORT}:${MYSQL_CLIENT_PORT}
     environment:
       <<: *mysql-environment
-      MYSQL_SERVER_ID: ${MYSQL_SLAVE_2_SERVER_ID}
-      MYSQL_PORT: ${MYSQL_SLAVE_2_PORT}
-      MYSQL_MASTER_HOST: ${MYSQL_MASTER_HOST}
     networks:
       - choisinsa-app-network
     volumes:
       - choisinsa-mysql-slave2-volume:/var/lib/mysql
-      - ./conf/mysql/slave/my.cnf:/etc/mysql/my.cnf
+      - ./conf/mysql/slave-2-my.cnf:/etc/mysql/my.cnf
       - ./scripts/mysql-slave-init.sh:/docker-entrypoint-initdb.d/mysql-slave-init.sh
     depends_on:
       - choisinsa-mysql
@@ -118,7 +115,25 @@ services:
     volumes:
       - choisinsa-redis-volume:/data
     restart: always
-
+  choisinsa-mysql-orchestrator:
+    image: itchoi0429/choisinsa-mysql-orchestrator:1.0
+    container_name: choisinsa-mysql-orchestrator
+    env_file:
+      - .env
+    ports:
+      - 3001:3000
+#    environment:
+#      - ORCHESTRATOR_API="http://choisinsa-mysql-orchestrator:3000/api"
+#      - ORCHESTRATOR_DB="mysql://root:${MYSQL_ROOT_PASSWORD}@${choisinsa-mysql}:${MYSQL_MASTER_PORT}/orchestrator"
+    networks:
+      - choisinsa-app-network
+    volumes:
+      - choisinsa-mysql-orchestrator-volume:/var/lib/orchestrator  # 데이터 저장을 위한 볼륨 마운트
+      - ./conf/orchestrator/orchestrator.conf.json:/etc/orchestrator.conf.json # 설정 파일 마운트
+    depends_on:
+      - choisinsa-mysql
+      - choisinsa-mysql-slave-2
+    restart: always
 volumes:
   choisinsa-mysql-volume:
     name: choisinsa-mysql-volume
@@ -131,6 +146,9 @@ volumes:
     external: true
   choisinsa-redis-volume:
     name: choisinsa-redis-volume
+    external: true
+  choisinsa-mysql-orchestrator-volume:
+    name: choisinsa-mysql-orchestrator-volume
     external: true
 
 networks:

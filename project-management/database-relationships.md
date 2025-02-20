@@ -1,4 +1,7 @@
 # 데이터베이스
+## docker compose 실행
+- 컨테이너 재실행시 -> 슬레이브 컨테이너 sh 실행 필요
+
 ## 마스터/슬레이브 구조
 - master
   - root -> all privileges 권한 (DBA용) -> DDL 제어시 사용 할 계정
