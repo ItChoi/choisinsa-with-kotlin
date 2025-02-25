@@ -2,7 +2,7 @@ version: '3.8'
 x-database-common:
   environment:
     &mysql-environment
-    MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    MYSQL_ROOT_PASSWORD: ${DEFAULT_PASSWORD}
     MYSQL_DATABASE: ${MYSQL_DATABASE}
 #    MYSQL_USER: ${MYSQL_USER}
 #    MYSQL_PASSWORD: ${MYSQL_PASSWORD}
@@ -122,9 +122,6 @@ services:
       - .env
     ports:
       - 3001:3000
-#    environment:
-#      - ORCHESTRATOR_API="http://choisinsa-mysql-orchestrator:3000/api"
-#      - ORCHESTRATOR_DB="mysql://root:${MYSQL_ROOT_PASSWORD}@${choisinsa-mysql}:${MYSQL_MASTER_PORT}/orchestrator"
     networks:
       - choisinsa-app-network
     volumes:
@@ -132,8 +129,25 @@ services:
       - ./conf/orchestrator/orchestrator.conf.json:/etc/orchestrator.conf.json # 설정 파일 마운트
     depends_on:
       - choisinsa-mysql
-      - choisinsa-mysql-slave-2
     restart: always
+  choisinsa-proxysql:
+    image: itchoi0429/choisinsa-proxysql:1.0
+    container_name: choisinsa-proxysql
+    env_file:
+      - .env
+    ports:
+      - 6033:6033
+    networks:
+      - choisinsa-app-network
+    volumes:
+      - ./conf/proxysql/proxysql.cnf:/etc/proxysql.cnf
+      - choisinsa-proxysql-volume:/var/lib/proxysql
+      - ./scripts/proxysql-init.sh:/docker-entrypoint-initdb.d/proxysql-init.sh
+    depends_on:
+      - choisinsa-mysql
+      - choisinsa-mysql-slave-1
+      - choisinsa-mysql-slave-2
+
 volumes:
   choisinsa-mysql-volume:
     name: choisinsa-mysql-volume
@@ -149,6 +163,9 @@ volumes:
     external: true
   choisinsa-mysql-orchestrator-volume:
     name: choisinsa-mysql-orchestrator-volume
+    external: true
+  choisinsa-proxysql-volume:
+    name: choisinsa-proxysql-volume
     external: true
 
 networks:
