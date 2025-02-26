@@ -1,15 +1,16 @@
 package com.mall.choisinsa.member.service
 
 import com.mall.choisinsa.common.crypto.AesGcmCrypto
-import com.mall.choisinsa.common.enumeration.exception.ExceptionType
 import com.mall.choisinsa.common.enumeration.RedisDataFormat
 import com.mall.choisinsa.common.enumeration.TokenType
+import com.mall.choisinsa.common.enumeration.exception.ExceptionType
+import com.mall.choisinsa.common.exception.GlobalException
+import com.mall.choisinsa.member.controller.response.MemberResponse
+import com.mall.choisinsa.member.controller.response.TokenResponseDto
 import com.mall.choisinsa.member.domain.dto.request.LoginRequest
 import com.mall.choisinsa.member.domain.dto.request.MemberRequest
-import com.mall.choisinsa.member.controller.response.TokenResponseDto
 import com.mall.choisinsa.member.infrastructure.MemberQuerydslRepository
 import com.mall.choisinsa.service.RedisService
-import com.mall.choisinsa.common.exception.GlobalException
 import com.mall.choisinsa.web.provider.JwtTokenProvider
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+
 @Service
 class MemberService (
     private val coreMemberService: CoreMemberService,
@@ -106,5 +108,12 @@ class MemberService (
         request.phoneNumber = aesGcmCrypto.encrypt(request.phoneNumber)
     }
 
+    @Transactional(readOnly = true)
+    fun findMemberResponseById(
+        memberId: Long
+    ): MemberResponse? {
+        return memberQuerydslRepository.findMemberResponseById(memberId)
+            ?: throw GlobalException(ExceptionType.NOT_FOUND_MEMBER)
+    }
 }
 

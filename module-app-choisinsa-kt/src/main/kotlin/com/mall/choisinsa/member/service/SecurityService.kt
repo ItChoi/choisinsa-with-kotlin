@@ -17,7 +17,7 @@ class SecurityService(
     private val coreMemberRepository: CoreMemberRepository,
 ) : UserDetailsService {
     override fun loadUserByUsername(username: String): UserDetails {
-        require(!MemberValidation.isValidLoginId(username))
+        require(MemberValidation.isValidLoginId(username))
 
         val member = findByLoginIdAndStatusOrThrow(username, MemberStatus.NORMAL)
         return AuthenticatedUser.of(member)

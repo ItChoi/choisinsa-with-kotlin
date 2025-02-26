@@ -1,6 +1,10 @@
 # 데이터베이스
 ## docker compose 실행
-- 컨테이너 재실행시 -> 슬레이브 컨테이너 sh 실행 필요
+- choisinsa master mysql 컨테이너 실행시 -> /docker-entrypoint-initdb.d/mysql-master-init.sh 
+- choisinsa slave mysql 컨테이너 실행시 -> /docker-entrypoint-initdb.d/mysql-slave-init.sh 
+- proxy sql -> 컨테이너 실행시 /docker-entrypoint-initdb.d/proxysql-init.sh 실행
+- mysql -> volume 삭제시 마스터, 슬레이브 모두 삭제 필요
+- mysql, proxysql -> 컨테이너 실행시 스크립트 실행 필요 (예정)
 
 ## 마스터/슬레이브 구조
 - master
@@ -10,12 +14,16 @@
 - slave
   - root -> all privileges 권한 (운영용) -> 건드릴 일 없음
   - itchoi -> optional privileges 권한 (오직 SELECT만!) (개발자용, 앱 -> slave read 요청만 수행)
+
+## proxysql
+- mysql -uID -pPW -h127.0.0.1 -P6033 -N -e "insert into SCHEMA.TABLENAME select @@hostname,now()" 2>&1| grep -v "Warning"
+- mysql -uID -pPW -h127.0.0.1 -P6033 -N -e "select @@hostname,now()" 2>&1| grep -v "Warning"
 ```sql
 -- master
 CREATE USER 'itchoi'@'%' IDENTIFIED BY '{password}';
 GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'itchoi'@'%';
 
-CREATE USER 'repl_user'@'%' IDENTIFIED WITH BY '{password}';;
+CREATE USER 'repl_user'@'%' IDENTIFIED BY '{password}';
 GRANT REPLICATION SLAVE ON *.* TO 'repl_user'@'%';
 FLUSH PRIVILEGES;
 

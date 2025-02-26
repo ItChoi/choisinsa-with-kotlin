@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import java.time.LocalDateTime
 
 @EnableWebSecurity
@@ -22,6 +23,7 @@ class SecurityConfig(
     private val jwtTokenProvider: JwtTokenProvider,
     private val securityService: SecurityService,
 ) {
+
     companion object {
         fun getUnsecuredHttpGetMethod(): List<String> {
             return listOf(
@@ -31,16 +33,18 @@ class SecurityConfig(
                 "/h2-console/**",
                 "favicon.ico",
                 "/css/**",
+                "/api/members/*",
             )
         }
 
         fun getUnsecuredHttpPostMethod(): List<String> {
             return listOf(
-                "/api/member/login",
-                "/api/member",
+                "/api/members/login",
+                "/api/members",
             )
         }
     }
+
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http {
@@ -63,7 +67,10 @@ class SecurityConfig(
                     sameOrigin
                 }
             }
-        }.apply { JwtAuthenticationFilter(jwtTokenProvider, securityService) }
+
+            addFilterBefore<UsernamePasswordAuthenticationFilter>(JwtAuthenticationFilter(jwtTokenProvider, securityService))
+
+        }//.apply { JwtAuthenticationFilter(jwtTokenProvider, securityService) }
 
         return http.build()
     }

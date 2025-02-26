@@ -1,9 +1,12 @@
 package com.mall.choisinsa.member.infrastructure
 
+import com.mall.choisinsa.member.controller.response.MemberResponse
 import com.mall.choisinsa.member.domain.dto.request.MemberRequest
+import com.querydsl.core.types.Projections
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
 import com.mall.choisinsa.member.domain.QMemberEntity.memberEntity as member
+import com.mall.choisinsa.member.domain.QMemberAddressEntity.memberAddressEntity as memberAddress
 
 
 @Repository
@@ -20,6 +23,29 @@ class MemberQuerydslRepository(
                 request.email?.let { member.loginId.eq(request.loginId) },
                 request.loginId?.let { member.loginId.eq(request.loginId) }
             ).fetch()?.size ?: 0
+    }
+
+    fun findMemberResponseById(memberId: Long): MemberResponse? {
+        return queryFactory
+            .select(
+                Projections.fields(
+                    MemberResponse::class.java,
+                    member.loginId.`as`("loginId"),
+                    member.name.`as`("name"),
+                    member.nickName.`as`("nickName"),
+                    member.email.`as`("email"),
+                    member.phoneNumber.`as`("phoneNumber"),
+                    member.birthday.`as`("birthday"),
+                    member.gender.`as`("gender"),
+                )
+            )
+            .from(member)
+            .innerJoin(memberAddress)
+            .on(memberAddress.memberId.eq(member.id))
+            .where(
+                member.id.eq(memberId)
+            )
+            .fetchFirst()
     }
 
 }
