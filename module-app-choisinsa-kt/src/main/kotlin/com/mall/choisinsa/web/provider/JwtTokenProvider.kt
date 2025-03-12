@@ -1,8 +1,8 @@
 package com.mall.choisinsa.web.provider
 
 import com.mall.choisinsa.common.domain.dto.AuthenticatedUser
+import com.mall.choisinsa.common.enumeration.RedisTTL
 import com.mall.choisinsa.common.enumeration.TokenType
-import com.mall.choisinsa.member.controller.response.TokenResponseDto
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -20,15 +20,13 @@ class JwtTokenProvider(
     @Value("\${jwt.access-token.secret}")
     private val secretWithAccessToken: String,
 
-    @Value("\${jwt.access-token.validity-in-milliseconds}")
-    private val validityInMillisecondsWithAccessToken : Long,
 
     @Value("\${jwt.refresh-token.secret}")
     private val secretWithRefreshToken: String,
 
-    @Value("\${jwt.refresh-token.validity-in-milliseconds}")
-    private val validityInMillisecondsWithRefreshToken : Long,
 ) {
+    private val validityInMillisecondsWithAccessToken : Long = RedisTTL.ACCESS_TOKEN_TTL.time
+    private val validityInMillisecondsWithRefreshToken : Long = RedisTTL.REFRESH_TOKEN_TTL.time
     /**
      * TODO
      * 1. 토큰 제어 로직 추가
@@ -41,7 +39,6 @@ class JwtTokenProvider(
         authentication: Authentication,
         loginId: String,
     ): String {
-
         val extraClaims = toAuthenticatedUser(authentication).toTokenPayload()
         return buildToken(
             type,
@@ -64,12 +61,16 @@ class JwtTokenProvider(
         extraClaims: MutableMap<String, Any?>,
         loginId: String,
     ): String {
+        val now = System.currentTimeMillis()
+        val issuedAt = Date(now) // 발급 시간
+        val expiration = Date(now + getExpirationTime(type)) // 15분 후 만료
+
         return Jwts
             .builder()
             .setClaims(extraClaims)
             .setSubject(loginId)
-            .setIssuedAt(Date(System.currentTimeMillis()))
-            .setExpiration(Date(System.currentTimeMillis() + getExpirationTime(type)))
+            .setIssuedAt(issuedAt)
+            .setExpiration(expiration)
             .signWith(getSignInKey(type), SignatureAlgorithm.HS512)
             .compact();
     }

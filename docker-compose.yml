@@ -1,11 +1,7 @@
 version: '3.8'
-x-database-common:
-  environment:
-    &mysql-environment
-    MYSQL_ROOT_PASSWORD: ${DEFAULT_PASSWORD}
-    MYSQL_DATABASE: ${MYSQL_DATABASE}
-#    MYSQL_USER: ${MYSQL_USER}
-#    MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+x-global-env: &global-env
+  env_file:
+    - .env
 
 services:
 #  choisinsa-admin-app-kt:
@@ -27,89 +23,98 @@ services:
 #      - choisinsa-mysql
 #      - choisinsa-redis
 #    restart: on-failure
-#  choisinsa-client-app-kt:
-#    image: itchoi0429/choisinsa-client-app-kt:1.0
-#    container_name: choisinsa-client-app-kt
-#    build:
-#      context: .
-#      dockerfile: module-app-choisinsa-kt/Dockerfile
-#    ports:
-#      - 8080:8080
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: '2'
-#          memory: 2GB
-#    networks:
-#      - choisinsa-app-network
-#    depends_on:
-#      - choisinsa-mysql
-#      - choisinsa-redis
-#    restart: on-failure
+  choisinsa-client-app-kt:
+    image: itchoi0429/choisinsa-client-app-kt:1.0
+    container_name: choisinsa-client-app-kt
+    build:
+      context: .
+      dockerfile: module-app-choisinsa-kt/Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      TZ: "Asia/Seoul"
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2GB
+    networks:
+      - choisinsa-app-network
+    depends_on:
+      - choisinsa-mysql
+      - choisinsa-redis
+    restart: on-failure
   choisinsa-mysql:
     image: itchoi0429/choisinsa-mysql:1.0
     container_name: choisinsa-mysql
-    env_file:
-      - .env
+    <<: *global-env
     ports:
       - ${MYSQL_MASTER_PORT}:${MYSQL_CLIENT_PORT}
     environment:
-      <<: *mysql-environment
-      MYSQL_SERVER_ID: ${MYSQL_MASTER_SERVER_ID}
-      MYSQL_PORT: ${MYSQL_MASTER_PORT}
+      TZ: "Asia/Seoul"
+      MYSQL_ROOT_PASSWORD: ${DEFAULT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     networks:
       - choisinsa-app-network
     volumes:
       - choisinsa-mysql-volume:/var/lib/mysql
       - ./conf/mysql/master-my.cnf:/etc/mysql/my.cnf
       - ./scripts/mysql-master-init.sh:/docker-entrypoint-initdb.d/mysql-master-init.sh
+      - ./scripts/start_mysqld_exporter.sh:/docker-entrypoint-initdb.d/start_mysqld_exporter.sh
+      - ./scripts/start_node_exporter.sh:/docker-entrypoint-initdb.d/start_mysqld_exporter.sh
     restart: always
   choisinsa-mysql-slave-1:
     image: itchoi0429/choisinsa-mysql:1.0
     container_name: choisinsa-mysql-slave-1
-    env_file:
-      - .env
+    <<: *global-env
     ports:
       - ${MYSQL_SLAVE_1_PORT}:${MYSQL_CLIENT_PORT}
     environment:
-      <<: *mysql-environment
-      MYSQL_SERVER_ID: ${MYSQL_SLAVE_1_SERVER_ID}
-      MYSQL_PORT: ${MYSQL_SLAVE_1_PORT}
-      MYSQL_MASTER_HOST: ${MYSQL_MASTER_HOST}
+      TZ: "Asia/Seoul"
+      MYSQL_ROOT_PASSWORD: ${DEFAULT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     networks:
       - choisinsa-app-network
     volumes:
       - choisinsa-mysql-slave1-volume:/var/lib/mysql
       - ./conf/mysql/slave-1-my.cnf:/etc/mysql/my.cnf
       - ./scripts/mysql-slave-init.sh:/docker-entrypoint-initdb.d/mysql-slave-init.sh
+      - ./scripts/start_mysqld_exporter.sh:/docker-entrypoint-initdb.d/start_mysqld_exporter.sh
+      - ./scripts/start_node_exporter.sh:/docker-entrypoint-initdb.d/start_mysqld_exporter.sh
     depends_on:
       - choisinsa-mysql
     restart: always
   choisinsa-mysql-slave-2:
     image: itchoi0429/choisinsa-mysql:1.0
     container_name: choisinsa-mysql-slave-2
-    env_file:
-      - .env
+    <<: *global-env
     ports:
       - ${MYSQL_SLAVE_2_PORT}:${MYSQL_CLIENT_PORT}
     environment:
-      <<: *mysql-environment
+      TZ: "Asia/Seoul"
+      MYSQL_ROOT_PASSWORD: ${DEFAULT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     networks:
       - choisinsa-app-network
     volumes:
       - choisinsa-mysql-slave2-volume:/var/lib/mysql
       - ./conf/mysql/slave-2-my.cnf:/etc/mysql/my.cnf
       - ./scripts/mysql-slave-init.sh:/docker-entrypoint-initdb.d/mysql-slave-init.sh
+      - ./scripts/start_mysqld_exporter.sh:/docker-entrypoint-initdb.d/start_mysqld_exporter.sh
+      - ./scripts/start_node_exporter.sh:/docker-entrypoint-initdb.d/start_mysqld_exporter.sh
     depends_on:
       - choisinsa-mysql
     restart: always
   choisinsa-redis:
     image: itchoi0429/choisinsa-redis:1.0
     container_name: choisinsa-redis
-    env_file:
-      - .env
+    <<: *global-env
     ports:
       - ${REDIS_CLIENT_PORT}:${REDIS_SERVER_PORT}
+    environment:
+      TZ: "Asia/Seoul"
+      MYSQL_ROOT_PASSWORD: ${DEFAULT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     networks:
       - choisinsa-app-network
     volumes:
@@ -118,10 +123,12 @@ services:
   choisinsa-mysql-orchestrator:
     image: itchoi0429/choisinsa-mysql-orchestrator:1.0
     container_name: choisinsa-mysql-orchestrator
-    env_file:
-      - .env
+    <<: *global-env
     ports:
       - 3001:3000
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DEFAULT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     networks:
       - choisinsa-app-network
     volumes:
@@ -133,10 +140,13 @@ services:
   choisinsa-proxysql:
     image: itchoi0429/choisinsa-proxysql:1.0
     container_name: choisinsa-proxysql
-    env_file:
-      - .env
+    <<: *global-env
     ports:
       - 6033:6033
+    environment:
+      TZ: "Asia/Seoul"
+      MYSQL_ROOT_PASSWORD: ${DEFAULT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     networks:
       - choisinsa-app-network
     volumes:
@@ -147,6 +157,51 @@ services:
       - choisinsa-mysql
       - choisinsa-mysql-slave-1
       - choisinsa-mysql-slave-2
+  choisinsa-prometheus:
+    image: itchoi0429/choisinsa-prometheus:1.0
+    container_name: choisinsa-prometheus
+    ports:
+      - 9090:9090
+    environment:
+      TZ: "Asia/Seoul"
+    networks:
+      - choisinsa-app-network
+    volumes:
+      - choisinsa-prometheus-volume:/data
+      - ./conf/prometheus:/etc/prometheus
+    restart: unless-stopped
+  choisinsa-mysql-exporter:
+    image: itchoi0429/choisinsa-mysql-exporter:1.0
+    container_name: choisinsa-mysql-exporter
+    <<: *global-env
+    ports:
+      - 9104:9104
+    networks:
+      - choisinsa-app-network
+    volumes:
+      - ./conf/exporter/mysql-exporter-my.cnf:/.my.cnf
+    depends_on:
+      - choisinsa-mysql
+#  choisinsa-node-exporter:
+#    image: itchoi0429/choisinsa-node-exporter:1.0
+#    container_name: choisinsa-node-exporter
+#    ports:
+#      - 9100:9100
+  choisinsa-grafana:
+    image: itchoi0429/choisinsa-grafana:1.0
+    container_name: choisinsa-grafana
+    <<: *global-env
+    ports:
+      - 3002:3000
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GF_ADMIN_USER}
+      GF_SECURITY_ADMIN_PASSWORD: ${DEFAULT_PASSWORD}
+    networks:
+      - choisinsa-app-network
+    volumes:
+      - choisinsa-grafana-volume:/var/lib/grafana
+    depends_on:
+      - choisinsa-prometheus
 
 volumes:
   choisinsa-mysql-volume:
@@ -166,6 +221,12 @@ volumes:
     external: true
   choisinsa-proxysql-volume:
     name: choisinsa-proxysql-volume
+    external: true
+  choisinsa-prometheus-volume:
+    name: choisinsa-prometheus-volume
+    external: true
+  choisinsa-grafana-volume:
+    name: choisinsa-prometheus-volume
     external: true
 
 networks:

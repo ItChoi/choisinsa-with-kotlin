@@ -27,3 +27,13 @@ spring:
     console:
       enabled: true
       path: '/h2-console'
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

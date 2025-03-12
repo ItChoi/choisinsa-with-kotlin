@@ -31,7 +31,6 @@ class JwtAuthenticationFilter(
             return
         }
 
-
         val token = getTokenFromHeader(req)
         if (StringUtils.isBlank(token) || !jwtTokenProvider.isValidToken(TokenType.ACCESS_TOKEN, token)) {
             throw GlobalException(ExceptionType.INVALID_JWT_TOKEN)

@@ -3,6 +3,7 @@ package com.mall.choisinsa.service
 import com.mall.choisinsa.common.enumeration.RedisTTL
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Service
+import java.time.Duration
 
 @Service
 class RedisService (
@@ -20,10 +21,10 @@ class RedisService (
     fun save(
         key: String,
         value: Any,
-        ttl: RedisTTL = RedisTTL.DEFAULT_TTL,
+        ttl: RedisTTL,
     ) {
         when (value) {
-            is String -> redisTemplate.opsForValue().set(key, value.toString())
+            is String -> redisTemplate.opsForValue().set(key, value.toString(), Duration.ofSeconds(ttl.getSeconds()))
             is List<*> -> redisTemplate.opsForList().rightPush(key, value)
             is Set<*> -> redisTemplate.opsForSet().add(key, value)
             else -> redisTemplate.opsForValue().set(key, value.toString())

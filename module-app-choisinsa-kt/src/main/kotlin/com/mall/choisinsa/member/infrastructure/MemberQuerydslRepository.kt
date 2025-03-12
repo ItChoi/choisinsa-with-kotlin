@@ -30,17 +30,17 @@ class MemberQuerydslRepository(
             .select(
                 Projections.fields(
                     MemberResponse::class.java,
-                    member.loginId.`as`("loginId"),
-                    member.name.`as`("name"),
-                    member.nickName.`as`("nickName"),
-                    member.email.`as`("email"),
-                    member.phoneNumber.`as`("phoneNumber"),
-                    member.birthday.`as`("birthday"),
-                    member.gender.`as`("gender"),
+                    member.loginId,
+                    member.name,
+                    member.nickName,
+                    member.email,
+                    member.phoneNumber,
+                    member.birthday,
+                    member.gender,
                 )
             )
             .from(member)
-            .innerJoin(memberAddress)
+            .leftJoin(memberAddress)
             .on(memberAddress.memberId.eq(member.id))
             .where(
                 member.id.eq(memberId)

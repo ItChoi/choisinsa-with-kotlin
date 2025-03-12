@@ -41,7 +41,7 @@ class MemberControllerTest(
             .willReturn(response)
 
         // when & then
-        this.mockMvc.perform(post("/api/member/login")
+        this.mockMvc.perform(post("/api/members/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
             .andExpect(status().isOk)

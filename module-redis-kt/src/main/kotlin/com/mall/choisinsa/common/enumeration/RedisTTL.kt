@@ -2,9 +2,13 @@ package com.mall.choisinsa.common.enumeration
 
 enum class RedisTTL(
     private val timeUnit: TimeUnit,
-    private val time: Long,
+    val time: Long,
 ) {
-    DEFAULT_TTL(TimeUnit.MINUTES, 5);
+    DEFAULT_TTL(TimeUnit.MINUTES, 5),
+    ACCESS_TOKEN_TTL(TimeUnit.MILLISECONDS, 900000),
+    REFRESH_TOKEN_TTL(TimeUnit.MILLISECONDS, 8640000),
+    TEST(TimeUnit.SECONDS, 15);
+
 
     fun getSeconds(): Long {
         return timeUnit.getSeconds(time)

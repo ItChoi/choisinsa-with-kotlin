@@ -2,6 +2,7 @@ package com.mall.choisinsa.member.service
 
 import com.mall.choisinsa.common.crypto.AesGcmCrypto
 import com.mall.choisinsa.common.enumeration.RedisDataFormat
+import com.mall.choisinsa.common.enumeration.RedisTTL
 import com.mall.choisinsa.common.enumeration.TokenType
 import com.mall.choisinsa.common.enumeration.exception.ExceptionType
 import com.mall.choisinsa.common.exception.GlobalException
@@ -66,7 +67,6 @@ class MemberService (
         loginId: String
     ): String {
         val redisKey = getRedisKeyForTokenType(tokenType, loginId)
-
         return redisService.get(redisKey) ?: generateAndSaveToken(redisKey, tokenType, authentication, loginId)
     }
 
@@ -87,7 +87,11 @@ class MemberService (
         loginId: String
     ): String {
         val token = jwtTokenProvider.generateToken(tokenType, authentication, loginId)
-        redisService.save(redisKey, token)
+        val redisTTL = when (tokenType) {
+            TokenType.ACCESS_TOKEN -> RedisTTL.ACCESS_TOKEN_TTL
+            TokenType.REFRESH_TOKEN -> RedisTTL.REFRESH_TOKEN_TTL
+        }
+        redisService.save(redisKey, token, redisTTL)
         return token
     }
 
@@ -111,7 +115,7 @@ class MemberService (
     @Transactional(readOnly = true)
     fun findMemberResponseById(
         memberId: Long
-    ): MemberResponse? {
+    ): MemberResponse {
         return memberQuerydslRepository.findMemberResponseById(memberId)
             ?: throw GlobalException(ExceptionType.NOT_FOUND_MEMBER)
     }

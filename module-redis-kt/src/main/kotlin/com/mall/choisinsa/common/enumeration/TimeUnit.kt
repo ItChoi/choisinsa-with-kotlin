@@ -25,7 +25,7 @@ enum class TimeUnit(
             WEEKLY -> time * 604800
             MONTHS -> getDaysInCurrentMonth() * 86400
             YEARS -> getDaysInCurrentYear() * 86400
-        }
+        } - 1
     }
 
     // 이번 달의 일 수 계산
