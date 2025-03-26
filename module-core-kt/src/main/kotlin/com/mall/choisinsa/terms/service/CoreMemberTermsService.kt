@@ -24,31 +24,48 @@ class CoreMemberTermsService(
         if (requests.isNullOrEmpty()) return
         validate(requests)
 
-        val memberTermsIds = requests.map { request -> request.memberTermsId }
-        val memberTermsAgreementsWithMemberTermsId = coreMemberTermsAgreementRepository.findAllBy(memberId, memberTermsIds)
-            .associateBy { it.memberTermsId }
+        deleteMemberTermsAgreementBy(requests, memberId)
+        coreMemberTermsAgreementRepository.saveAll(getMemberTermsAgreementForSave(requests, memberId))
+    }
 
-        val deleteMemberTermsIds: MutableList<Long> = mutableListOf()
-        val saveMemberTermsAgreements: MutableList<MemberTermsAgreement> = mutableListOf()
-        requests.forEach { request ->
-            if (request.isAgree) {
-                if (!memberTermsAgreementsWithMemberTermsId.containsKey(request.memberTermsId)) {
-                    saveMemberTermsAgreements.add(MemberTermsAgreement(memberId = memberId, memberTermsId = request.memberTermsId))
-                }
-            } else {
-                deleteMemberTermsIds.add(request.memberTermsId)
+    private fun deleteMemberTermsAgreementBy(
+        requests: List<MemberTermsRequest>,
+        memberId: Long
+    ) {
+        val notAgreedMemberTermsIds = requests
+            .filter { !it.isAgree }
+            .map { it.memberTermsId }
+
+        if (notAgreedMemberTermsIds.isNullOrEmpty()) return
+        coreMemberTermsAgreementRepository.deleteBy(memberId, notAgreedMemberTermsIds)
+    }
+
+    private fun getMemberTermsAgreementForSave(
+        requests: List<MemberTermsRequest>,
+        memberId: Long
+    ): List<MemberTermsAgreement> {
+        val agreedMemberTermsIds: List<Long> = requests
+            .filter { it.isAgree }
+            .map { it.memberTermsId }
+
+        val savedMemberTermsAgreementIds = coreMemberTermsAgreementRepository.findAllBy(memberId, agreedMemberTermsIds)
+            .map { it.memberTermsId }
+
+        return agreedMemberTermsIds
+            .filterNot { savedMemberTermsAgreementIds.contains(it) }
+            .map {
+                MemberTermsAgreement(
+                    memberId = memberId,
+                    memberTermsId = it,
+                )
             }
-        }
-
-        coreMemberTermsAgreementRepository.deleteBy(memberId, deleteMemberTermsIds)
-        coreMemberTermsAgreementRepository.saveAll(saveMemberTermsAgreements)
     }
 
     private fun validate(
         requests: List<MemberTermsRequest>
     ) {
         val memberTermsIds = requests.map { request -> request.memberTermsId }
-        val memberTermsWithId = coreMemberTermsRepository.findAll(memberTermsIds)
+        val memberTermsWithId = coreMemberTermsRepository.findAllByIdIn(memberTermsIds)
             .associateBy { it.id }
 
         if (memberTermsIds.size !== memberTermsWithId.size) {
@@ -57,8 +74,9 @@ class CoreMemberTermsService(
 
         requests.forEach { request ->
             val memberTerms = memberTermsWithId.get(request.memberTermsId)
+                ?: throw GlobalException(ExceptionType.BAD_REQUEST)
 
-            if (memberTerms!!.type === TermsType.REQUIRED && !request.isAgree) {
+            if (memberTerms.type === TermsType.REQUIRED && !request.isAgree) {
                 throw GlobalException(ExceptionType.REQUIRED_ITEM_NOT_PROVIDED)
             }
         }

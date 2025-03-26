@@ -1,12 +1,13 @@
 package com.mall.choisinsa.member.domain
 
 import com.mall.choisinsa.common.enumeration.LoginType
+import java.time.LocalDateTime
 
 class MemberSnsConnect(
-    private val id: Long? = null,
-    private val memberId: Long,
-    private val snsId: String,
-    private val snsType: LoginType,
-) {
-
-}
+    val id: Long? = null,
+    val memberId: Long,
+    val snsId: String,
+    val snsType: LoginType,
+    val snsEmail: String,
+    val createdDt: LocalDateTime?,
+)

@@ -32,9 +32,23 @@ class CoreMemberTermsServiceTest {
             MemberTermsRequest(2, true),
             MemberTermsRequest(3, false),
             MemberTermsRequest(4, true),
-        ).associateBy { it.memberTermsId }
+        ).map { it.memberTermsId }
 
         println(associateBy)
+    }
+
+    @Test
+    @DisplayName("")
+    fun test456() {
+        val list = mutableListOf(
+            1L,
+            2L,
+            3L,
+            4L,
+        )
+
+        var a = list.filter { it -> it == 1L || it == 2L }
+        println()
     }
 
 

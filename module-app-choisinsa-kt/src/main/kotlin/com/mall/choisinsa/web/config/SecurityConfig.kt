@@ -31,7 +31,7 @@ class SecurityConfig(
                 "/docs/**",
                 "/img/**",
                 "/h2-console/**",
-                "favicon.ico",
+                "/favicon.ico",
                 "/css/**",
                 "/api/members/*",
             )

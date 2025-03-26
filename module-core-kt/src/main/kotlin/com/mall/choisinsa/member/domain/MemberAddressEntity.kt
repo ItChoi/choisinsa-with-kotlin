@@ -24,4 +24,30 @@ class MemberAddressEntity(
 
 ) : BaseDateTimeEntity() {
 
+    companion object {
+        fun from(
+            memberAddress: MemberAddress
+        ): MemberAddressEntity {
+            return MemberAddressEntity(
+                id = memberAddress.id,
+                memberId = memberAddress.memberId,
+                status = memberAddress.status,
+                title = memberAddress.title,
+                address = memberAddress.address,
+                addressDetail = memberAddress.addressDetail,
+            )
+        }
+    }
+
+    fun toModel(): MemberAddress {
+        return MemberAddress(
+            id = this.id,
+            memberId = this.memberId,
+            status = this.status,
+            title = this.title,
+            address = this.address,
+            addressDetail = this.addressDetail,
+            createdDt = super.createdDt,
+        )
+    }
 }

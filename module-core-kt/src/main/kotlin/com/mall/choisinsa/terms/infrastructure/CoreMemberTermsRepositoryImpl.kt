@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 class CoreMemberTermsRepositoryImpl(
     private val coreMemberTermsJpaRepository: CoreMemberTermsJpaRepository,
 ) : CoreMemberTermsRepository {
-    override fun findAll(memberTermsIds: List<Long>): List<MemberTerms> {
-        return coreMemberTermsJpaRepository.findAll().map { it.toModel() }
+    override fun findAllByIdIn(memberTermsIds: List<Long>): List<MemberTerms> {
+        return coreMemberTermsJpaRepository.findAllById(memberTermsIds).map { it.toModel() }
     }
 }

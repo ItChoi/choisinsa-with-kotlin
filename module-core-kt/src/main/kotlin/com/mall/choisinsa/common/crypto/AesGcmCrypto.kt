@@ -43,6 +43,7 @@ class AesGcmCrypto(
     fun decrypt(
         value: String,
     ): String {
+        if ("".equals(value)) return value
         return decrypt(
             objectMapper.readValue(decryptFromBase64(value), EncryptedResult::class.java)
         ).decodeToString()

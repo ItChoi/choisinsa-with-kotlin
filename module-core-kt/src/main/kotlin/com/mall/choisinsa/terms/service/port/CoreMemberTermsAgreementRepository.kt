@@ -15,10 +15,10 @@ interface CoreMemberTermsAgreementRepository {
 
     fun deleteBy(
         memberId: Long,
-        memberTermsIds: MutableList<Long>
+        memberTermsIds: List<Long>
     )
     fun saveAll(
-        memberTermsAgreements: MutableList<MemberTermsAgreement>
+        memberTermsAgreements: List<MemberTermsAgreement>
     )
 
 }

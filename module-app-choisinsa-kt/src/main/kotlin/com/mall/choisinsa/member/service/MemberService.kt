@@ -7,6 +7,7 @@ import com.mall.choisinsa.common.enumeration.TokenType
 import com.mall.choisinsa.common.enumeration.exception.ExceptionType
 import com.mall.choisinsa.common.exception.GlobalException
 import com.mall.choisinsa.member.controller.response.MemberResponse
+import com.mall.choisinsa.member.controller.response.MemberWrapperResponse
 import com.mall.choisinsa.member.controller.response.TokenResponseDto
 import com.mall.choisinsa.member.domain.dto.request.LoginRequest
 import com.mall.choisinsa.member.domain.dto.request.MemberRequest
@@ -22,12 +23,16 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class MemberService (
-    private val coreMemberService: CoreMemberService,
     private val memberQuerydslRepository: MemberQuerydslRepository,
+    private val coreMemberService: CoreMemberService,
+    private val memberSnsConnectService: MemberSnsConnectService,
+    private val memberSizeService: MemberSizeService,
+    private val memberAddressService: MemberAddressService,
+    private val redisService: RedisService,
+
     private val authenticationProvider: AuthenticationProvider,
     private val jwtTokenProvider: JwtTokenProvider,
     private val passwordEncoder: PasswordEncoder,
-    private val redisService: RedisService,
     private val aesGcmCrypto: AesGcmCrypto,
 ) {
 
@@ -49,6 +54,33 @@ class MemberService (
         )
 
         return generateTokenResponseDto(authentication, loginId)
+    }
+
+    @Transactional(readOnly = true)
+    fun findMemberWrapperResponseById(
+        memberId: Long
+    ): MemberWrapperResponse {
+        return MemberWrapperResponse(
+            member = findMemberResponseById(memberId),
+            memberSizes = memberSizeService.findAllMemberSizeResponseBy(memberId),
+            memberAddress = memberAddressService.findMainMemberSizeResponseBy(memberId),
+            memberSnsConnects = memberSnsConnectService.findAllMemberSnsConnectResponseBy(memberId),
+        )
+    }
+
+    private fun findMemberResponseById(memberId: Long): MemberResponse {
+        val memberResponse = memberQuerydslRepository.findMemberResponseById(memberId)
+            ?: throw GlobalException(ExceptionType.NOT_FOUND_MEMBER)
+
+        decrypt(memberResponse)
+        return memberResponse
+    }
+
+
+    private fun decrypt(memberResponse: MemberResponse) {
+        memberResponse.name = memberResponse.name?.let { aesGcmCrypto.decrypt(it) }
+        memberResponse.email = memberResponse.email?.let { aesGcmCrypto.decrypt(it) }
+        memberResponse.phoneNumber = memberResponse.phoneNumber?.let { aesGcmCrypto.decrypt(it) }
     }
 
     private fun generateTokenResponseDto(
@@ -110,14 +142,6 @@ class MemberService (
         request.password = passwordEncoder.encode(request.password)
         request.email = aesGcmCrypto.encrypt(request.email)
         request.phoneNumber = aesGcmCrypto.encrypt(request.phoneNumber)
-    }
-
-    @Transactional(readOnly = true)
-    fun findMemberResponseById(
-        memberId: Long
-    ): MemberResponse {
-        return memberQuerydslRepository.findMemberResponseById(memberId)
-            ?: throw GlobalException(ExceptionType.NOT_FOUND_MEMBER)
     }
 }
 

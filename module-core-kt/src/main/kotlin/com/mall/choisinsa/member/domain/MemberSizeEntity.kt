@@ -21,4 +21,26 @@ class MemberSizeEntity(
     var value: String,
 ) : BaseDateTimeEntity() {
 
+    companion object {
+        fun from(
+            memberSize: MemberSize
+        ): MemberSizeEntity {
+            return MemberSizeEntity(
+                id = memberSize.id,
+                memberId = memberSize.memberId,
+                type = memberSize.type,
+                value = memberSize.value,
+            )
+        }
+    }
+
+    fun toModel(): MemberSize {
+        return MemberSize(
+            id = this.id,
+            memberId = this.memberId,
+            type = this.type,
+            value = this.value,
+            createdDt = super.createdDt,
+        )
+    }
 }

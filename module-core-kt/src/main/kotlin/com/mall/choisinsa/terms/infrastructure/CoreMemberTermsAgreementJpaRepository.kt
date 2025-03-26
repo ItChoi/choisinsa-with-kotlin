@@ -12,6 +12,6 @@ interface CoreMemberTermsAgreementJpaRepository : JpaRepository<MemberTermsAgree
 
     fun deleteByMemberIdAndMemberTermsIdIn(
         memberId: Long,
-        memberTermsIds: MutableList<Long>
+        memberTermsIds: List<Long>
     )
 }

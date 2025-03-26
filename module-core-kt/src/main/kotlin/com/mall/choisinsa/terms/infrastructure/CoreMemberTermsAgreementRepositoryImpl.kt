@@ -27,13 +27,13 @@ class CoreMemberTermsAgreementRepositoryImpl(
 
     override fun deleteBy(
         memberId: Long,
-        memberTermsIds: MutableList<Long>
+        memberTermsIds: List<Long>
     ) {
         coreMemberTermsAgreementJpaRepository.deleteByMemberIdAndMemberTermsIdIn(memberId, memberTermsIds)
     }
 
     override fun saveAll(
-        memberTermsAgreements: MutableList<MemberTermsAgreement>
+        memberTermsAgreements: List<MemberTermsAgreement>
     ) {
         val memberTermsAgreementEntities = memberTermsAgreements
             .asSequence()

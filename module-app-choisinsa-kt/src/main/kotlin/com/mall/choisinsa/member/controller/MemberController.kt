@@ -12,7 +12,6 @@ class MemberController (
     private val memberService: MemberService,
 ) {
 
-
     @PostMapping("/login")
     fun login(
         @RequestBody request: LoginRequest
@@ -35,7 +34,7 @@ class MemberController (
         @PathVariable memberId: Long,
     ): ResponseWrapper {
         return ResponseWrapper.ok(
-            data = memberService.findMemberResponseById(memberId)
+            data = memberService.findMemberWrapperResponseById(memberId)
         )
     }
 }

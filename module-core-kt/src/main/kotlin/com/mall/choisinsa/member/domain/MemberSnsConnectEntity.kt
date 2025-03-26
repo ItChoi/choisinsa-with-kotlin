@@ -18,6 +18,33 @@ class MemberSnsConnectEntity(
     @Enumerated(EnumType.STRING)
     private val snsType: LoginType,
 
+    private val snsEmail: String,
+
 ) : BaseDateTimeEntity() {
 
+    companion object {
+        fun from(
+            memberSnsConnect: MemberSnsConnect
+        ): MemberSnsConnectEntity {
+            return MemberSnsConnectEntity(
+                id = memberSnsConnect.id,
+                memberId = memberSnsConnect.memberId,
+                snsId = memberSnsConnect.snsId,
+                snsType = memberSnsConnect.snsType,
+                snsEmail = memberSnsConnect.snsEmail,
+            )
+        }
+    }
+
+    fun toModel(): MemberSnsConnect {
+        return MemberSnsConnect(
+            id = this.id,
+            memberId = this.memberId,
+            snsId = this.snsId,
+            snsType = this.snsType,
+            snsEmail = this.snsEmail,
+            createdDt = super.createdDt,
+        )
+
+    }
 }

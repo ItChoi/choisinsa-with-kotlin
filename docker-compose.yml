@@ -23,27 +23,27 @@ services:
 #      - choisinsa-mysql
 #      - choisinsa-redis
 #    restart: on-failure
-  choisinsa-client-app-kt:
-    image: itchoi0429/choisinsa-client-app-kt:1.0
-    container_name: choisinsa-client-app-kt
-    build:
-      context: .
-      dockerfile: module-app-choisinsa-kt/Dockerfile
-    ports:
-      - 8080:8080
-    environment:
-      TZ: "Asia/Seoul"
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 2GB
-    networks:
-      - choisinsa-app-network
-    depends_on:
-      - choisinsa-mysql
-      - choisinsa-redis
-    restart: on-failure
+#  choisinsa-client-app-kt:
+#    image: itchoi0429/choisinsa-client-app-kt:1.0
+#    container_name: choisinsa-client-app-kt
+#    build:
+#      context: .
+#      dockerfile: module-app-choisinsa-kt/Dockerfile
+#    ports:
+#      - 8080:8080
+#    environment:
+#      TZ: "Asia/Seoul"
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '2'
+#          memory: 2GB
+#    networks:
+#      - choisinsa-app-network
+#    depends_on:
+#      - choisinsa-mysql
+#      - choisinsa-redis
+#    restart: on-failure
   choisinsa-mysql:
     image: itchoi0429/choisinsa-mysql:1.0
     container_name: choisinsa-mysql

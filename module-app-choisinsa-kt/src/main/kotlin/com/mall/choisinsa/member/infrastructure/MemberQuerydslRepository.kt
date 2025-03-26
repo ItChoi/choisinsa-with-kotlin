@@ -19,8 +19,6 @@ class MemberQuerydslRepository(
             .select(member.id)
             .from(member)
             .where(
-                request.loginId?.let { member.loginId.eq(request.loginId) },
-                request.email?.let { member.loginId.eq(request.loginId) },
                 request.loginId?.let { member.loginId.eq(request.loginId) }
             ).fetch()?.size ?: 0
     }
@@ -37,6 +35,7 @@ class MemberQuerydslRepository(
                     member.phoneNumber,
                     member.birthday,
                     member.gender,
+                    member.createdDt,
                 )
             )
             .from(member)
