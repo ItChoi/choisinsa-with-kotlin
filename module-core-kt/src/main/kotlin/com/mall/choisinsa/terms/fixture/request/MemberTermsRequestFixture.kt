@@ -1,4 +1,4 @@
-package com.mall.choisinsa.common.fixture.request.terms
+package com.mall.choisinsa.terms.fixture.request
 
 import com.mall.choisinsa.terms.domain.dto.MemberTermsRequest
 

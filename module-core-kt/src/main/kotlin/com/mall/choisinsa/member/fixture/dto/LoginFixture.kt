@@ -1,8 +1,8 @@
-package com.mall.choisinsa.common.fixture.request.member
+package com.mall.choisinsa.member.fixture.dto
 
 import com.mall.choisinsa.member.domain.dto.request.LoginRequest
 
-data class LoginRequestFixture(
+data class LoginFixture(
     var loginId: String = "test123",
     var password: String = "qwe123!!",
 ) {
@@ -13,8 +13,8 @@ data class LoginRequestFixture(
         )
     }
 
-    fun build(block: LoginRequestFixture.() -> Unit): LoginRequest {
-        val builder = LoginRequestFixture()
+    fun build(block: LoginFixture.() -> Unit): LoginRequest {
+        val builder = LoginFixture()
         builder.apply(block)
         return builder.build()
     }

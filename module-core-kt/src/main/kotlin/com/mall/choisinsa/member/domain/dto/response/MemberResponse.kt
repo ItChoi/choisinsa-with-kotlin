@@ -1,10 +1,11 @@
-package com.mall.choisinsa.member.controller.response
+package com.mall.choisinsa.member.domain.dto.response
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.mall.choisinsa.common.enumeration.GenderType
 import java.time.LocalDateTime
 
 data class MemberResponse(
+    var id: Long?,
     var loginId: String,
     var name: String?,
     var nickName: String?,
@@ -15,5 +16,5 @@ data class MemberResponse(
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     var createdDt: LocalDateTime?,
 ) {
-    constructor() : this("", "", "", "", "", "", GenderType.NONE, null)
+    constructor() : this(null, "", "", "", "", "", "", GenderType.NONE, null)
 }

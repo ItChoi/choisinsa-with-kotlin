@@ -1,4 +1,4 @@
-package com.mall.choisinsa.member.controller.response
+package com.mall.choisinsa.member.domain.dto.response
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.mall.choisinsa.common.enumeration.LoginType

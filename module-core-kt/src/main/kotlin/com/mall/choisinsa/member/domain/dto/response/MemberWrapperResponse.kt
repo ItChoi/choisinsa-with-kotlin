@@ -1,4 +1,4 @@
-package com.mall.choisinsa.member.controller.response
+package com.mall.choisinsa.member.domain.dto.response
 
 data class MemberWrapperResponse(
     var member: MemberResponse,

@@ -1,6 +1,6 @@
 package com.mall.choisinsa.member.service
 
-import com.mall.choisinsa.member.controller.response.MemberSizeResponse
+import com.mall.choisinsa.member.domain.dto.response.MemberSizeResponse
 import com.mall.choisinsa.member.service.port.MemberSizeRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

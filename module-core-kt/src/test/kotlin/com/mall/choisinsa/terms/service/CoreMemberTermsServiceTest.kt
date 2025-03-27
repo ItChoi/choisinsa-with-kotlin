@@ -1,8 +1,6 @@
 package com.mall.choisinsa.terms.service
 
-import com.mall.choisinsa.common.fixture.request.terms.MemberTermsRequestFixture
 import com.mall.choisinsa.terms.domain.dto.MemberTermsRequest
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

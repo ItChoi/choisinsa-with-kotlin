@@ -1,6 +1,6 @@
 package com.mall.choisinsa.member.service
 
-import com.mall.choisinsa.member.controller.response.MemberSnsConnectResponse
+import com.mall.choisinsa.member.domain.dto.response.MemberSnsConnectResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

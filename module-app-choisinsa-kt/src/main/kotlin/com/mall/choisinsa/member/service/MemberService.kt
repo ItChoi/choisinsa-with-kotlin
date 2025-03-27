@@ -6,8 +6,8 @@ import com.mall.choisinsa.common.enumeration.RedisTTL
 import com.mall.choisinsa.common.enumeration.TokenType
 import com.mall.choisinsa.common.enumeration.exception.ExceptionType
 import com.mall.choisinsa.common.exception.GlobalException
-import com.mall.choisinsa.member.controller.response.MemberResponse
-import com.mall.choisinsa.member.controller.response.MemberWrapperResponse
+import com.mall.choisinsa.member.domain.dto.response.MemberResponse
+import com.mall.choisinsa.member.domain.dto.response.MemberWrapperResponse
 import com.mall.choisinsa.member.controller.response.TokenResponseDto
 import com.mall.choisinsa.member.domain.dto.request.LoginRequest
 import com.mall.choisinsa.member.domain.dto.request.MemberRequest

@@ -1,6 +1,6 @@
 package com.mall.choisinsa.member.infrastructure
 
-import com.mall.choisinsa.member.controller.response.MemberResponse
+import com.mall.choisinsa.member.domain.dto.response.MemberResponse
 import com.mall.choisinsa.member.domain.dto.request.MemberRequest
 import com.querydsl.core.types.Projections
 import com.querydsl.jpa.impl.JPAQueryFactory

@@ -1,6 +1,6 @@
 package com.mall.choisinsa.web.provider
 
-import com.mall.choisinsa.common.fixture.entity.member.MemberFixture
+import com.mall.choisinsa.member.fixture.entity.MemberFixture
 import com.mall.choisinsa.common.domain.dto.AuthenticatedUser
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

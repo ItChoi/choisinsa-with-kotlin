@@ -78,4 +78,21 @@ FLUSH PRIVILEGES;
 - 회원 약관 (member_terms)
   - (1:N) 회원 약관 동의 (member_terms_agreement)
 
+### 브랜드
+- 회사 (company)
+  - (1:N) 브랜드 (brand)
+    - (1:1) 브랜드 상세 (brand_detail)
+    - (1:N) 상품 (item)
+
+### 상품
+- 상품 카테고리 (item_category)
+  - (1:N) 상품 (item)
+    - (1:N) 상품 이미지 (item_image)
+      - (1:N) 상품 썸네일 (item_thumbnail)
+    - (1:N) 상품 에디터 정보 (item_editor_info)
+      - (1:N) 상품 에디터 내용 (item_editor_content)
+        - (1:N) 상품 에디터 마크업 텍스트 (item_editor_markup_text)
+        - (1:N) 상품 에디터 이미지 (item_editor_image)
+
+
 ---

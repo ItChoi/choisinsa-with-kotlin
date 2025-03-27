@@ -1,7 +1,19 @@
 == #회원#
 
 == 로그인^(회원)^
-include::{snippets}/home_member_login/http-request.adoc[]
-include::{snippets}/home_member_login/request-fields.adoc[]
-include::{snippets}/home_member_login/http-response.adoc[]
-include::{snippets}/home_member_login/response-fields.adoc[]
+include::{snippets}/member_login/http-request.adoc[]
+include::{snippets}/member_login/request-fields.adoc[]
+include::{snippets}/member_login/http-response.adoc[]
+include::{snippets}/member_login/response-fields.adoc[]
+
+== 회원가입^(회원)^
+include::{snippets}/save_member/http-request.adoc[]
+include::{snippets}/save_member/request-fields.adoc[]
+include::{snippets}/save_member/http-response.adoc[]
+include::{snippets}/save_member/response-fields.adoc[]
+
+== 회원 조회(회원, 소셜 연동, 사이즈, 메인 배송지)^(회원)^
+include::{snippets}/get_member_wrapper/http-request.adoc[]
+include::{snippets}/get_member_wrapper/path-parameters.adoc[]
+include::{snippets}/get_member_wrapper/http-response.adoc[]
+include::{snippets}/get_member_wrapper/response-fields.adoc[]

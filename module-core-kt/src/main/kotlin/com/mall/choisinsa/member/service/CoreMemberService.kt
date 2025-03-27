@@ -16,6 +16,6 @@ class CoreMemberService(
     @Transactional
     fun saveMember(request: MemberRequest) {
         val member = coreMemberRepository.save(Member.from(request))
-        coreMemberTermsService.saveAllWithMemberTermsAgreement(member.id!!, request.memberTermsRequests)
+        coreMemberTermsService.saveAllWithMemberTermsAgreement(member.id!!, request.memberTerms)
     }
 }
