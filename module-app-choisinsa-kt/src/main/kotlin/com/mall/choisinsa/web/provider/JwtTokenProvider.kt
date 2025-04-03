@@ -27,12 +27,6 @@ class JwtTokenProvider(
 ) {
     private val validityInMillisecondsWithAccessToken : Long = RedisTTL.ACCESS_TOKEN_TTL.time
     private val validityInMillisecondsWithRefreshToken : Long = RedisTTL.REFRESH_TOKEN_TTL.time
-    /**
-     * TODO
-     * 1. 토큰 제어 로직 추가
-     * 2. 리프레시 토큰 추가
-     * 3. 리프레시, 액세스 토큰 로직 재사용 리팩토링
-     */
 
     fun generateToken(
         type: TokenType,

@@ -1,6 +1,6 @@
 package com.mall.choisinsa.brand.infrastructure
 
-import com.mall.choisinsa.brand.domain.dto.request.search.BrandSearch
+import com.mall.choisinsa.brand.domain.dto.search.BrandSearch
 import com.mall.choisinsa.brand.domain.dto.response.BrandWithItemCountResponse
 import com.querydsl.core.types.Projections
 import com.querydsl.jpa.impl.JPAQueryFactory
@@ -17,7 +17,7 @@ class BrandQuerydslRepository(
     ): List<BrandWithItemCountResponse> {
         return queryFactory
             .select(
-                Projections.fields(
+                Projections.constructor(
                     BrandWithItemCountResponse::class.java,
                     brand.id.`as`("brandId"),
                     brand.companyId.`as`("companyId"),

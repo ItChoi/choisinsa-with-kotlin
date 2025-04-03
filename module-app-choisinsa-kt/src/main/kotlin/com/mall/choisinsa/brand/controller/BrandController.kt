@@ -1,6 +1,6 @@
 package com.mall.choisinsa.brand.controller
 
-import com.mall.choisinsa.brand.domain.dto.request.search.BrandSearch
+import com.mall.choisinsa.brand.domain.dto.search.BrandSearch
 import com.mall.choisinsa.brand.service.BrandService
 import com.mall.choisinsa.common.controller.response.ResponseWrapper
 import org.springframework.web.bind.annotation.GetMapping

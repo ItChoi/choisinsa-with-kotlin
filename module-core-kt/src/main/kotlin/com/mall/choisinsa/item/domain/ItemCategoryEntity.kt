@@ -12,17 +12,9 @@ class ItemCategoryEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
-    var rootParentId: Long? = null,
-
-    var parentId: Long? = null,
-
     var name: String,
 
     var code: String? = null,
-
-    var depth: Int,
-
-    var displayOrder: Int,
 
 ) : BaseDateTimeEntity() {
 

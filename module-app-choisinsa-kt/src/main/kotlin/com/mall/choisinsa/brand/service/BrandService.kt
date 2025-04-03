@@ -1,6 +1,6 @@
 package com.mall.choisinsa.brand.service
 
-import com.mall.choisinsa.brand.domain.dto.request.search.BrandSearch
+import com.mall.choisinsa.brand.domain.dto.search.BrandSearch
 import com.mall.choisinsa.brand.domain.dto.response.BrandWithItemCountResponse
 import com.mall.choisinsa.brand.infrastructure.BrandQuerydslRepository
 import org.springframework.stereotype.Service

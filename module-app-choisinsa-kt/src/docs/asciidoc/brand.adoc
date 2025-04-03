@@ -1,0 +1,7 @@
+== #브랜드#
+
+=== 브랜드 조회(총 아이템 개수 포함)^(회원)^
+include::{snippets}/get_brands_with_item_count/http-request.adoc[]
+include::{snippets}/get_brands_with_item_count/request-fields.adoc[]
+include::{snippets}/get_brands_with_item_count/http-response.adoc[]
+include::{snippets}/get_brands_with_item_count/response-fields.adoc[]

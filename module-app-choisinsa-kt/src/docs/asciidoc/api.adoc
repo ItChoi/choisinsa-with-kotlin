@@ -11,3 +11,4 @@ itchoi <itchoi0429@gmail.com>
 API
 
 include::member.adoc[]
+include::brand.adoc[]

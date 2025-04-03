@@ -1,6 +1,7 @@
 package com.mall.choisinsa.controller
 
 import com.mall.choisinsa.ApiBaseTest
+import com.mall.choisinsa.member.controller.MemberController
 import com.mall.choisinsa.member.controller.response.TokenResponseDto
 import com.mall.choisinsa.member.fixture.dto.LoginFixture
 import com.mall.choisinsa.member.fixture.dto.MemberFixture
@@ -8,8 +9,8 @@ import com.mall.choisinsa.member.fixture.dto.MemberWrapperFixture
 import com.mall.choisinsa.member.service.MemberService
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.mockito.BDDMockito.any
 import org.mockito.BDDMockito.given
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get
@@ -21,6 +22,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 
+@WebMvcTest(MemberController::class)
 class MemberControllerTest(
 
 ) : ApiBaseTest() {

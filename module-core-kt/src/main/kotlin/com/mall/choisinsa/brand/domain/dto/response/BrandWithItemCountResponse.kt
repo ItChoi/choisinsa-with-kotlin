@@ -1,9 +1,9 @@
 package com.mall.choisinsa.brand.domain.dto.response
 
 data class BrandWithItemCountResponse(
-    val brandId: Long,
+    val id: Long,
     val companyId: Long,
-    val brandNameEn: String,
-    val brandNameKo: String,
-    val totalItemCount: Int,
+    val nameEn: String,
+    val nameKo: String,
+    val totalItemCount: Long,
 )

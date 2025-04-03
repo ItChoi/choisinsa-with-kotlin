@@ -1,10 +1,11 @@
 # 데이터베이스
-## docker compose 실행
-- choisinsa master mysql 컨테이너 실행시 -> /docker-entrypoint-initdb.d/mysql-master-init.sh 
-- choisinsa slave mysql 컨테이너 실행시 -> /docker-entrypoint-initdb.d/mysql-slave-init.sh 
-- proxy sql -> 컨테이너 실행시 /docker-entrypoint-initdb.d/proxysql-init.sh 실행
-- mysql -> volume 삭제시 마스터, 슬레이브 모두 삭제 필요
-- mysql, proxysql -> 컨테이너 실행시 스크립트 실행 필요 (예정)
+
+---
+
+## proxysql 접근
+- master -> 쓰기만 담당
+- slave -> 읽기만 담당
+- 기준 데이터 -> read_only
 
 ## 마스터/슬레이브 구조
 - master
@@ -14,38 +15,6 @@
 - slave
   - root -> all privileges 권한 (운영용) -> 건드릴 일 없음
   - itchoi -> optional privileges 권한 (오직 SELECT만!) (개발자용, 앱 -> slave read 요청만 수행)
-
-## proxysql
-- mysql -uID -pPW -h127.0.0.1 -P6033 -N -e "insert into SCHEMA.TABLENAME select @@hostname,now()" 2>&1| grep -v "Warning"
-- mysql -uID -pPW -h127.0.0.1 -P6033 -N -e "select @@hostname,now()" 2>&1| grep -v "Warning"
-```sql
--- master
-CREATE USER 'itchoi'@'%' IDENTIFIED BY '{password}';
-GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'itchoi'@'%';
-
-CREATE USER 'repl_user'@'%' IDENTIFIED BY '{password}';
-GRANT REPLICATION SLAVE ON *.* TO 'repl_user'@'%';
-FLUSH PRIVILEGES;
-
-# Master DB (Write 용)
--- DB_MASTER_HOST=choisinsa-mysql
--- DB_MASTER_PORT=3306
--- DB_MASTER_USER=dev_user
--- DB_MASTER_PASSWORD=dev_password
-
--- slave
-CREATE USER 'itchoi'@'%' IDENTIFIED BY '{password}';
-GRANT SELECT ON *.* TO 'itchoi'@'%';
-FLUSH PRIVILEGES;
-
-# Slave DB (Read 용)
--- DB_SLAVE_HOST=choisinsa-mysql-slave-1
--- DB_SLAVE_PORT=3306
--- DB_SLAVE_USER=dev_user
--- DB_SLAVE_PASSWORD=dev_password
-
-
-```  
 
 ---
 
@@ -86,6 +55,12 @@ FLUSH PRIVILEGES;
 
 ### 상품
 - 상품 카테고리 (item_category)
+  - (1:N) 상품 카테고리 클로저 (item_category_closure)
+    - id
+    - ancestor
+    - descendant
+    - depth
+    - display
   - (1:N) 상품 (item)
     - (1:N) 상품 이미지 (item_image)
       - (1:N) 상품 썸네일 (item_thumbnail)
