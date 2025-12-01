@@ -1,6 +1,8 @@
 package com.mall.choisinsa.item.domain
 
 import com.mall.choisinsa.common.domain.BaseDateTimeEntity
+import com.mall.choisinsa.common.enumeration.CommonStatus
+import com.mall.choisinsa.common.enumeration.ItemStatus
 import jakarta.persistence.*
 import java.time.Instant
 
@@ -16,7 +18,9 @@ class ItemEntity(
 
     var brandId: Long,
 
-    var status: String? = null,
+    var status: CommonStatus? = CommonStatus.ACTIVE,
+
+    var itemStatus: ItemStatus? = null,
 
     var targetType: String? = null,
 

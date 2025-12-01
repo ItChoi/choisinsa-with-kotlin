@@ -22,4 +22,13 @@ class BrandController(
             data = brandService.findBrandsWithItemCountBy(search)
         )
     }
+
+    @GetMapping
+    fun getSimpleBrands(
+        @RequestBody search: BrandSearch,
+    ): ResponseWrapper {
+        return ResponseWrapper.ok(
+            data = brandService.findAllBrandResponseBy(search)
+        )
+    }
 }

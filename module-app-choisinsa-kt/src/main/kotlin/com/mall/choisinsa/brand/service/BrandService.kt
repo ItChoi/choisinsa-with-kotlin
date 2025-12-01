@@ -2,6 +2,7 @@ package com.mall.choisinsa.brand.service
 
 import com.mall.choisinsa.brand.domain.dto.search.BrandSearch
 import com.mall.choisinsa.brand.domain.dto.response.BrandWithItemCountResponse
+import com.mall.choisinsa.brand.domain.dto.response.SimpleBrandResponse
 import com.mall.choisinsa.brand.infrastructure.BrandQuerydslRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class BrandService(
     private val brandQuerydslRepository: BrandQuerydslRepository,
+    private val coreBrandService: CoreBrandService,
 ) {
 
     @Transactional(readOnly = true)
@@ -16,5 +18,12 @@ class BrandService(
         search: BrandSearch
     ): List<BrandWithItemCountResponse> {
         return brandQuerydslRepository.findBrandsWithItemCountBy(search)
+    }
+
+    @Transactional(readOnly = true)
+    fun findAllBrandResponseBy(
+        search: BrandSearch
+    ): List<SimpleBrandResponse> {
+        return coreBrandService.findAllSimpleBrandResponseBy(search)
     }
 }

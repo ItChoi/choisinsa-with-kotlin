@@ -22,12 +22,6 @@ class AdminMemberEntity(
     @Enumerated(EnumType.STRING)
     private val status: AdminMemberStatus,
 
-    private val name: String? = null,
-
     private val email: String? = null,
 
-    private val nickName: String? = null,
-
-    private val phoneNumber: String? = null,
-
-    )// : BaseDateTimeEntity() { }
+    ) : BaseDateTimeEntity() { }

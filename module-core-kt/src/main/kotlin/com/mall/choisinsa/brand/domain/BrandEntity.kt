@@ -17,6 +17,13 @@ class BrandEntity(
 
     var nameKo: String? = null,
 
-) : BaseDateTimeEntity() {
+    var description: String? = null,
 
-}
+    var webSite: String? = null, // 브랜드 웹 사이트
+
+    var email: String? = null, // 브랜드 이메일
+
+    var address: String? = null, // 영업 소재지 주소
+
+    var managerPhoneNumber: String? = null, // 담당자 휴대폰 번호
+) : BaseDateTimeEntity()

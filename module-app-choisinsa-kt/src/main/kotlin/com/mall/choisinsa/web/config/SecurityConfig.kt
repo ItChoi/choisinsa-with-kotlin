@@ -34,6 +34,8 @@ class SecurityConfig(
                 "/favicon.ico",
                 "/css/**",
                 "/api/members/*",
+                "/api/item-categories/**",
+                "/api/brands/**",
             )
         }
 

@@ -1,6 +1,5 @@
 package com.mall.choisinsa.item.service
 
-import com.mall.choisinsa.brand.infrastructure.BrandQuerydslRepository
 import com.mall.choisinsa.item.domain.dto.response.ItemCategoryWithItemCountResponse
 import com.mall.choisinsa.item.domain.dto.search.ItemCategorySearch
 import com.mall.choisinsa.item.infrastructure.ItemCategoryQuerydslRepository
@@ -17,8 +16,6 @@ class ItemCategoryService(
     fun findCategoriesWithItemCountBy(
         search: ItemCategorySearch
     ): List<ItemCategoryWithItemCountResponse> {
-        //itemCategoryQuerydslRepository.findAllBy(search);
-
-        return itemCategoryQuerydslRepository.findCategoriesWithItemCountBy(search)
+        return itemCategoryQuerydslRepository.findAllItemCategoryWithItemCountResponseBy(search)
     }
 }

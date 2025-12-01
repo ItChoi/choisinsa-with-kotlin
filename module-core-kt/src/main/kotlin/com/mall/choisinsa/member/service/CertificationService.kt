@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class CertificationService(
-    private  val mailSender: MailSender,
+    private val mailSender: MailSender,
 ) {
 
     fun send(
