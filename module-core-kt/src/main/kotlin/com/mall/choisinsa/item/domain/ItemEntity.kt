@@ -2,9 +2,9 @@ package com.mall.choisinsa.item.domain
 
 import com.mall.choisinsa.common.domain.BaseDateTimeEntity
 import com.mall.choisinsa.common.enumeration.CommonStatus
+import com.mall.choisinsa.common.enumeration.ItemGender
 import com.mall.choisinsa.common.enumeration.ItemStatus
 import jakarta.persistence.*
-import java.time.Instant
 
 @Entity
 @Table(name = "item")
@@ -22,7 +22,7 @@ class ItemEntity(
 
     var itemStatus: ItemStatus? = null,
 
-    var targetType: String? = null,
+    var itemGender: ItemGender,
 
     var nameEn: String? = null,
 
@@ -37,4 +37,5 @@ class ItemEntity(
     var totalStockQuantity: Int? = null,
 
 ) : BaseDateTimeEntity() {
+
 }
