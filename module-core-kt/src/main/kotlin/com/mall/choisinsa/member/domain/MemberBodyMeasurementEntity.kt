@@ -3,14 +3,13 @@ package com.mall.choisinsa.member.domain
 import com.mall.choisinsa.common.domain.BaseDateTimeEntity
 import com.mall.choisinsa.common.enumeration.MemberSizeType
 import jakarta.persistence.*
-import java.time.Instant
 
 @Entity
-@Table(name = "member_size")
-class MemberSizeEntity(
+@Table(name = "member_body_measurement")
+class MemberBodyMeasurementEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column
     var id: Long? = null,
 
     var memberId: Long,
@@ -23,19 +22,19 @@ class MemberSizeEntity(
 
     companion object {
         fun from(
-            memberSize: MemberSize
-        ): MemberSizeEntity {
-            return MemberSizeEntity(
-                id = memberSize.id,
-                memberId = memberSize.memberId,
-                type = memberSize.type,
-                value = memberSize.value,
+            memberBodyMeasurement: MemberBodyMeasurement
+        ): MemberBodyMeasurementEntity {
+            return MemberBodyMeasurementEntity(
+                id = memberBodyMeasurement.id,
+                memberId = memberBodyMeasurement.memberId,
+                type = memberBodyMeasurement.type,
+                value = memberBodyMeasurement.value,
             )
         }
     }
 
-    fun toModel(): MemberSize {
-        return MemberSize(
+    fun toModel(): MemberBodyMeasurement {
+        return MemberBodyMeasurement(
             id = this.id,
             memberId = this.memberId,
             type = this.type,

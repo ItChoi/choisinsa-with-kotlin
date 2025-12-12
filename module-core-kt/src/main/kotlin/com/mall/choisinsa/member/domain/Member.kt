@@ -1,5 +1,6 @@
 package com.mall.choisinsa.member.domain
 
+import com.mall.choisinsa.common.domain.BaseDateTimeEntity
 import com.mall.choisinsa.common.enumeration.GenderType
 import com.mall.choisinsa.common.enumeration.MemberStatus
 import com.mall.choisinsa.common.port.ClockHolder
@@ -8,31 +9,27 @@ import java.time.LocalDateTime
 
 class Member(
     val id: Long? = null,
-    val loginId: String,
-    val password: String,
-    val status: MemberStatus = MemberStatus.NORMAL,
-    val name: String? = null,
-    val email: String,
-    val nickName: String? = null,
-    val phoneNumber: String,
-    val profileFileUrl: String? = null,
-    val lastLoginDt: LocalDateTime? = null,
+    var commonFileId: Long? = null,
 
-    val birthday: String? = null,
-    val gender: GenderType = GenderType.NONE,
-    val selfIntroduce: String? = null,
+    var loginId: String,
+    var password: String,
+    var status: MemberStatus = MemberStatus.NORMAL,
+    var nickName: String? = null,
+    var lastLoginDt: LocalDateTime? = null,
 
-    val createdDt: LocalDateTime? = null,
-    val updatedDt: LocalDateTime? = null,
-) {
+    var gender: GenderType = GenderType.NONE,
+    var introduce: String? = null,
+    var createdDt: LocalDateTime,
+    var updatedDt: LocalDateTime? = null
+    ) {
     companion object {
-        fun from(request: MemberRequest): Member {
-            return Member(
+        fun from(request: MemberRequest): Member? {
+            /*return Member(
                 loginId = request.loginId,
                 password = request.password,
-                email = request.email,
-                phoneNumber = request.phoneNumber,
-            )
+
+            )*/
+            return null
         }
 
         fun login(clockHolder: ClockHolder) {

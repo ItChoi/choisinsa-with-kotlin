@@ -2,7 +2,7 @@ package com.mall.choisinsa.member.domain.dto.response
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.mall.choisinsa.common.enumeration.MemberSizeType
-import com.mall.choisinsa.member.domain.MemberSize
+import com.mall.choisinsa.member.domain.MemberBodyMeasurement
 import java.time.LocalDateTime
 
 data class MemberSizeResponse(
@@ -15,14 +15,14 @@ data class MemberSizeResponse(
 ) {
     companion object {
         fun from(
-            memberSize: MemberSize
+            memberBodyMeasurement: MemberBodyMeasurement
         ): MemberSizeResponse {
             return MemberSizeResponse(
-                id = memberSize.id,
-                memberId = memberSize.memberId,
-                type = memberSize.type,
-                value = memberSize.value,
-                createdDt = memberSize.createdDt,
+                id = memberBodyMeasurement.id,
+                memberId = memberBodyMeasurement.memberId,
+                type = memberBodyMeasurement.type,
+                value = memberBodyMeasurement.value,
+                createdDt = memberBodyMeasurement.createdDt,
             )
         }
     }

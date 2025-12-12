@@ -13,6 +13,8 @@ class MemberEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
+    var commonFileId: Long? = null,
+
     val loginId: String,
 
     val password: String,
@@ -25,19 +27,10 @@ class MemberEntity(
     @Enumerated(EnumType.STRING)
     private val gender: GenderType = GenderType.NONE,
 
-    private val profileFileUrl: String? = null,
-
-    private val selfIntroduce: String? = null,
+    private val introduce: String? = null,
 
     private val lastLoginDt: LocalDateTime? = null,
 
-    private val birthday: String? = null,
-
-    private val phoneNumber: String,
-
-    private val name: String? = null,
-
-    private val email: String,
 ) : BaseDateTimeEntity() {
 
     companion object {
@@ -49,15 +42,10 @@ class MemberEntity(
                 loginId = member.loginId,
                 password = member.password,
                 status = member.status,
-                name = member.name,
-                email = member.email,
                 nickName = member.nickName,
-                phoneNumber = member.phoneNumber,
-                profileFileUrl = member.profileFileUrl,
                 lastLoginDt = member.lastLoginDt,
-                birthday = member.birthday,
                 gender = member.gender,
-                selfIntroduce = member.selfIntroduce
+                introduce = member.introduce
             )
         }
     }
@@ -68,15 +56,10 @@ class MemberEntity(
             loginId = this.loginId,
             password = this.password,
             status = this.status,
-            name = this.name,
-            email = this.email,
             nickName = this.nickName,
-            phoneNumber = this.phoneNumber,
-            profileFileUrl = this.profileFileUrl,
             lastLoginDt = this.lastLoginDt,
-            birthday = this.birthday,
             gender = this.gender,
-            selfIntroduce = this.selfIntroduce,
+            introduce = this.introduce,
             createdDt = this.createdDt,
             updatedDt = this.updatedDt,
         )

@@ -1,3 +1,4 @@
+/*
 package com.mall.choisinsa.member.fixture.entity
 
 import com.mall.choisinsa.common.enumeration.MemberStatus
@@ -36,4 +37,4 @@ class MemberFixture {
         builder.apply(block)
         return builder.build()
     }
-}
+}*/
