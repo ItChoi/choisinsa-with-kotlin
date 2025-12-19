@@ -2,7 +2,7 @@ package com.mall.choisinsa.member.domain.dto.response
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.mall.choisinsa.common.enumeration.LoginType
-import com.mall.choisinsa.member.domain.MemberSnsConnect
+import com.mall.choisinsa.member.model.MemberSnsConnect
 import java.time.LocalDateTime
 
 data class MemberSnsConnectResponse(

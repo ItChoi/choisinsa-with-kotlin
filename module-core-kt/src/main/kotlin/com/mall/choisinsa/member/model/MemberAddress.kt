@@ -1,8 +1,6 @@
-package com.mall.choisinsa.member.domain
+package com.mall.choisinsa.member.model
 
-import com.mall.choisinsa.common.domain.BaseDateTimeEntity
 import com.mall.choisinsa.common.enumeration.MemberAddressStatus
-import jakarta.persistence.*
 import java.time.LocalDateTime
 
 class MemberAddress(

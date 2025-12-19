@@ -3,6 +3,7 @@ package com.mall.choisinsa.member.domain
 import com.mall.choisinsa.common.domain.BaseDateTimeEntity
 import com.mall.choisinsa.common.enumeration.GenderType
 import com.mall.choisinsa.common.enumeration.MemberStatus
+import com.mall.choisinsa.member.model.Member
 import jakarta.persistence.*
 import java.time.LocalDateTime
 

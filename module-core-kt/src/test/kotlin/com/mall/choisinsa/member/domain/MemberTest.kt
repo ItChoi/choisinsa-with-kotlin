@@ -1,6 +1,7 @@
 package com.mall.choisinsa.member.domain
 
 import com.mall.choisinsa.member.fixture.dto.MemberFixture
+import com.mall.choisinsa.member.model.Member
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

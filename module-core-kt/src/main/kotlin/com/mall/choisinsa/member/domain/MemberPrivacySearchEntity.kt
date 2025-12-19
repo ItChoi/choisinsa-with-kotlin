@@ -1,6 +1,8 @@
 package com.mall.choisinsa.member.domain
 
 import com.mall.choisinsa.common.domain.BaseDateTimeEntity
+import com.mall.choisinsa.member.model.MemberPrivacySearch
+import com.mall.choisinsa.member.service.port.MemberPrivacySearchRepository
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -22,4 +24,23 @@ class MemberPrivacySearchEntity(
     private val emailEncrypted: String?,
     private val phoneNumberEncrypted: String?,
     private val birthdayEncrypted: String?,
-) : BaseDateTimeEntity()
+) : BaseDateTimeEntity() {
+
+    companion object {
+        fun from(
+            memberPrivacySearch: MemberPrivacySearch,
+        ): MemberPrivacySearchEntity {
+            return MemberPrivacySearchEntity(
+                memberId = memberPrivacySearch.memberId,
+                name = memberPrivacySearch.name,
+                email = memberPrivacySearch.email,
+                birthday = memberPrivacySearch.birthday,
+                phoneNumber = memberPrivacySearch.phoneNumber,
+                nameEncrypted = memberPrivacySearch.nameEncrypted,
+                emailEncrypted = memberPrivacySearch.emailEncrypted,
+                phoneNumberEncrypted = memberPrivacySearch.phoneNumberEncrypted,
+                birthdayEncrypted = memberPrivacySearch.birthdayEncrypted,
+            )
+        }
+    }
+}

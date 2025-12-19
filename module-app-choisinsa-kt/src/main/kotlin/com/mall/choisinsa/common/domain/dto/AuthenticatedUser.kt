@@ -2,7 +2,7 @@ package com.mall.choisinsa.common.domain.dto
 
 import com.mall.choisinsa.common.enumeration.MemberStatus
 import com.mall.choisinsa.common.enumeration.MemberType
-import com.mall.choisinsa.member.domain.Member
+import com.mall.choisinsa.member.model.Member
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.CredentialsContainer
 import org.springframework.security.core.GrantedAuthority

@@ -1,6 +1,5 @@
-package com.mall.choisinsa.member.domain
+package com.mall.choisinsa.member.model
 
-import com.mall.choisinsa.common.domain.BaseDateTimeEntity
 import com.mall.choisinsa.common.enumeration.GenderType
 import com.mall.choisinsa.common.enumeration.MemberStatus
 import com.mall.choisinsa.common.port.ClockHolder
@@ -19,17 +18,15 @@ class Member(
 
     var gender: GenderType = GenderType.NONE,
     var introduce: String? = null,
-    var createdDt: LocalDateTime,
+    var createdDt: LocalDateTime? = null,
     var updatedDt: LocalDateTime? = null
     ) {
     companion object {
-        fun from(request: MemberRequest): Member? {
-            /*return Member(
+        fun from(request: MemberRequest): Member {
+            return Member(
                 loginId = request.loginId,
                 password = request.password,
-
-            )*/
-            return null
+            )
         }
 
         fun login(clockHolder: ClockHolder) {

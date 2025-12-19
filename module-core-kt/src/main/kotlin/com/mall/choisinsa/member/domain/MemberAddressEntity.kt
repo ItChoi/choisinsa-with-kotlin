@@ -2,6 +2,7 @@ package com.mall.choisinsa.member.domain
 
 import com.mall.choisinsa.common.domain.BaseDateTimeEntity
 import com.mall.choisinsa.common.enumeration.MemberAddressStatus
+import com.mall.choisinsa.member.model.MemberAddress
 import jakarta.persistence.*
 
 @Entity

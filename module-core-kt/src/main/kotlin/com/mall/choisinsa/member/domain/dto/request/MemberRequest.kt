@@ -6,10 +6,11 @@ import com.mall.choisinsa.common.util.MemberValidation
 import com.mall.choisinsa.terms.domain.dto.MemberTermsRequest
 
 data class MemberRequest(
-    val loginType: LoginType = LoginType.HOME,
     val loginId: String,
     var password: String,
+    var name: String,
     var email: String,
+    var birthday: String,
     val recommenderLoginId: String? = null,
     var phoneNumber: String,
     val ci: String? = null,

@@ -1,4 +1,4 @@
-package com.mall.choisinsa.member.domain
+package com.mall.choisinsa.member.model
 
 import com.mall.choisinsa.common.enumeration.MemberCertificationStatus
 import com.mall.choisinsa.common.enumeration.MemberCertificationType

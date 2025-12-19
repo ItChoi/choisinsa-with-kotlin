@@ -17,13 +17,14 @@ data class MemberFixture(
     var recommenderLoginId: String? = "test",
     var phoneNumber: String = "010-0000-0000",
     var ci: String? = null,
-    var name: String? = "최모씨",
+    var name: String,
     var nickName: String? = "둘리눈알",
-    var birthday: String? = "2000-09-22",
+    var birthday: String = "2000-09-22",
     var gender: GenderType = GenderType.SECRET,
     var createdDt: LocalDateTime? = LocalDateTime.now(),
 
     val memberTermsRequests: MutableList<MemberTermsRequest>? = MemberTermsRequestFixture().builds(),
+
 ) {
     fun request(): MemberRequest {
         return MemberRequest(
@@ -34,11 +35,13 @@ data class MemberFixture(
             phoneNumber = this.phoneNumber,
             ci = this.ci,
             memberTerms = this.memberTermsRequests,
+            name = this.name,
+            birthday = this.birthday,
         )
     }
 
     fun request(block: MemberFixture.() -> Unit): MemberRequest {
-        val builder = MemberFixture()
+        val builder = MemberFixture(name = "최모씨")
         builder.apply(block)
         return builder.request()
     }
@@ -58,7 +61,7 @@ data class MemberFixture(
     }
 
     fun response(block: MemberFixture.() -> Unit): MemberResponse {
-        val builder = MemberFixture()
+        val builder = MemberFixture(name = "최모씨")
         builder.apply(block)
         return builder.response()
     }

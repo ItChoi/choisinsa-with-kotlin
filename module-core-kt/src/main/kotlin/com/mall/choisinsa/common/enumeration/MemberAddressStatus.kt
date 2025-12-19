@@ -5,4 +5,5 @@ enum class MemberAddressStatus(
 ) {
     MAIN("메인 주소"),
     SUB("서브 주소"),
+    DELETED("삭제"),
 }

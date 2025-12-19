@@ -2,7 +2,7 @@
 package com.mall.choisinsa.member.fixture.entity
 
 import com.mall.choisinsa.common.enumeration.MemberStatus
-import com.mall.choisinsa.member.domain.Member
+import com.mall.choisinsa.member.model.Member
 import java.time.LocalDateTime
 
 class MemberFixture {

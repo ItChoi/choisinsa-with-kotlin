@@ -1,7 +1,7 @@
 package com.mall.choisinsa.member.infrastructure
 
 import com.mall.choisinsa.common.enumeration.MemberStatus
-import com.mall.choisinsa.member.domain.Member
+import com.mall.choisinsa.member.model.Member
 import com.mall.choisinsa.member.domain.MemberEntity
 import com.mall.choisinsa.member.service.port.CoreMemberRepository
 import org.springframework.stereotype.Repository

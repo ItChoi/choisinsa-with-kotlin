@@ -1,6 +1,6 @@
 package com.mall.choisinsa.member.infrastructure
 
-import com.mall.choisinsa.member.domain.MemberSnsConnect
+import com.mall.choisinsa.member.model.MemberSnsConnect
 import com.mall.choisinsa.member.service.port.CoreMemberSnsConnectRepository
 import org.springframework.stereotype.Repository
 

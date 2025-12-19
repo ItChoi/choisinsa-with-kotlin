@@ -10,6 +10,7 @@ import com.mall.choisinsa.member.domain.dto.response.MemberResponse
 import com.mall.choisinsa.member.domain.dto.response.MemberWrapperResponse
 import com.mall.choisinsa.member.controller.response.TokenResponseDto
 import com.mall.choisinsa.member.domain.dto.request.LoginRequest
+import com.mall.choisinsa.member.domain.dto.request.MemberPrivacySearchRequest
 import com.mall.choisinsa.member.domain.dto.request.MemberRequest
 import com.mall.choisinsa.member.infrastructure.MemberQuerydslRepository
 import com.mall.choisinsa.service.RedisService
@@ -38,10 +39,17 @@ class MemberService (
 
     @Transactional
     fun saveMember(request: MemberRequest) {
-        validate(request)
+        //validate(request)
 
         encodePrivacy(request)
-        coreMemberService.saveMember(request)
+        coreMemberService.saveMember(
+            request,
+            MemberPrivacySearchRequest(
+                aesGcmCrypto.encrypt(request.name),
+                aesGcmCrypto.encrypt(request.email),
+                aesGcmCrypto.encrypt(request.phoneNumber),
+                aesGcmCrypto.encrypt(request.birthday),
+            ))
     }
 
     @Transactional(readOnly = true)
@@ -140,8 +148,9 @@ class MemberService (
         request: MemberRequest
     ) {
         request.password = passwordEncoder.encode(request.password)
-        request.email = aesGcmCrypto.encrypt(request.email)
-        request.phoneNumber = aesGcmCrypto.encrypt(request.phoneNumber)
+        //request.email = aesGcmCrypto.encrypt(request.email)
+        //request.phoneNumber = aesGcmCrypto.encrypt(request.phoneNumber)
+        //request.birthday = aesGcmCrypto.encrypt(request.birthday)
     }
 }
 

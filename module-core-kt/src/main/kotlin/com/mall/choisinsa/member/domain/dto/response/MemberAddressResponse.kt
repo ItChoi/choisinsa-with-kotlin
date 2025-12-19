@@ -2,7 +2,7 @@ package com.mall.choisinsa.member.domain.dto.response
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.mall.choisinsa.common.enumeration.MemberAddressStatus
-import com.mall.choisinsa.member.domain.MemberAddress
+import com.mall.choisinsa.member.model.MemberAddress
 import java.time.LocalDateTime
 
 data class MemberAddressResponse(

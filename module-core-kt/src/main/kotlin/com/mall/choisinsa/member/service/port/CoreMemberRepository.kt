@@ -1,7 +1,7 @@
 package com.mall.choisinsa.member.service.port
 
 import com.mall.choisinsa.common.enumeration.MemberStatus
-import com.mall.choisinsa.member.domain.Member
+import com.mall.choisinsa.member.model.Member
 
 interface CoreMemberRepository {
     fun findByLoginIdAndStatus(

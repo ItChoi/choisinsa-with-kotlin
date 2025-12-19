@@ -2,6 +2,7 @@ package com.mall.choisinsa.member.domain
 
 import com.mall.choisinsa.common.domain.BaseDateTimeEntity
 import com.mall.choisinsa.common.enumeration.LoginType
+import com.mall.choisinsa.member.model.MemberSnsConnect
 import jakarta.persistence.*
 
 @Table(name = "member_sns_connect")
