@@ -1,6 +1,6 @@
 package com.mall.choisinsa.common.enumeration
 
-enum class MemberSizeType(
+enum class MemberBodyMeasurementType(
     val desc: String,
 ) {
     HEIGHT("키 (cm)"),

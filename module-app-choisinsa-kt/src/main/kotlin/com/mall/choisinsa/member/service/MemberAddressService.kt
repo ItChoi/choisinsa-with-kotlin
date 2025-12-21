@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 class MemberAddressService(
     private val memberAddressRepository: MemberAddressRepository,
 ) {
-    fun findMainMemberSizeResponseBy(
+    fun findMainMemberAddressResponseBy(
         memberId: Long
     ): MemberAddressResponse? {
         return memberAddressRepository.findByMemberIdAndStatus(memberId, MemberAddressStatus.MAIN)

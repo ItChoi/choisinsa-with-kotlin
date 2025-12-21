@@ -1,7 +1,8 @@
 package com.mall.choisinsa.member.domain
 
 import com.mall.choisinsa.common.domain.BaseDateTimeEntity
-import com.mall.choisinsa.common.enumeration.MemberSizeType
+import com.mall.choisinsa.common.enumeration.MemberBodyMeasurementType
+import com.mall.choisinsa.member.model.MemberBodyMeasurement
 import jakarta.persistence.*
 
 @Entity
@@ -15,7 +16,7 @@ class MemberBodyMeasurementEntity(
     var memberId: Long,
 
     @Enumerated(EnumType.STRING)
-    var type: MemberSizeType,
+    var type: MemberBodyMeasurementType,
 
     var value: String,
 ) : BaseDateTimeEntity() {

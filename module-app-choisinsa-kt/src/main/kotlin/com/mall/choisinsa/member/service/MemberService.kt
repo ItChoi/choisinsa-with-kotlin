@@ -27,7 +27,7 @@ class MemberService (
     private val memberQuerydslRepository: MemberQuerydslRepository,
     private val coreMemberService: CoreMemberService,
     private val memberSnsConnectService: MemberSnsConnectService,
-    private val memberSizeService: MemberSizeService,
+    private val memberBodyMeasurementService: MemberBodyMeasurementService,
     private val memberAddressService: MemberAddressService,
     private val redisService: RedisService,
 
@@ -39,7 +39,7 @@ class MemberService (
 
     @Transactional
     fun saveMember(request: MemberRequest) {
-        //validate(request)
+        validate(request)
 
         encodePrivacy(request)
         coreMemberService.saveMember(
@@ -70,25 +70,15 @@ class MemberService (
     ): MemberWrapperResponse {
         return MemberWrapperResponse(
             member = findMemberResponseById(memberId),
-            memberSizes = memberSizeService.findAllMemberSizeResponseBy(memberId),
-            memberAddress = memberAddressService.findMainMemberSizeResponseBy(memberId),
+            memberBodyMeasurements = memberBodyMeasurementService.findAllMemberBodyMeasurementResponseBy(memberId),
+            memberAddress = memberAddressService.findMainMemberAddressResponseBy(memberId),
             memberSnsConnects = memberSnsConnectService.findAllMemberSnsConnectResponseBy(memberId),
         )
     }
 
     private fun findMemberResponseById(memberId: Long): MemberResponse {
-        val memberResponse = memberQuerydslRepository.findMemberResponseById(memberId)
+        return memberQuerydslRepository.findMemberResponseById(memberId)
             ?: throw GlobalException(ExceptionType.NOT_FOUND_MEMBER)
-
-        decrypt(memberResponse)
-        return memberResponse
-    }
-
-
-    private fun decrypt(memberResponse: MemberResponse) {
-        memberResponse.name = memberResponse.name?.let { aesGcmCrypto.decrypt(it) }
-        memberResponse.email = memberResponse.email?.let { aesGcmCrypto.decrypt(it) }
-        memberResponse.phoneNumber = memberResponse.phoneNumber?.let { aesGcmCrypto.decrypt(it) }
     }
 
     private fun generateTokenResponseDto(

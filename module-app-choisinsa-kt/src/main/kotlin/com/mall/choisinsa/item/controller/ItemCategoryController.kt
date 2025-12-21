@@ -1,6 +1,5 @@
 package com.mall.choisinsa.item.controller
 
-import com.mall.choisinsa.brand.domain.dto.search.BrandSearch
 import com.mall.choisinsa.common.controller.response.ResponseWrapper
 import com.mall.choisinsa.item.domain.dto.search.ItemCategorySearch
 import com.mall.choisinsa.item.service.ItemCategoryService
