@@ -9,6 +9,10 @@ import java.time.Duration
 class RedisService (
     private val redisTemplate: RedisTemplate<String, Any>,
 ) {
+    /**
+     * export OPENAI_API_KEY="YOUR_KEY"
+     *
+     */
 
     /**
      * 메서드명	    레디스 타입
@@ -46,6 +50,6 @@ class RedisService (
     fun hasKey(
         key: String,
     ): Boolean {
-        return redisTemplate.hasKey(key)
+        return redisTemplate.hasKey(key) == true
     }
 }

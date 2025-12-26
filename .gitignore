@@ -43,6 +43,7 @@ application-jwt.yml
 application-oauth.yml
 application-redis.yml
 application-crypto.yml
+application-llm.yml
 
 sql/**
 

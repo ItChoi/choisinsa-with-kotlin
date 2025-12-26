@@ -5,6 +5,7 @@ plugins {
     kotlin("plugin.jpa") version "1.9.25"
 }
 
+
 group = "choisinsa.module-core-kt"
 version = "0.0.1-SNAPSHOT"
 
@@ -23,6 +24,16 @@ dependencies {
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.core:jackson-databind")
+
+    // Spring AI BOM + OpenAI Chat/Embedding + VectorStore (in-memory)
+    // BOM 패턴은 Spring AI 문서 예시를 따름 :contentReference[oaicite:6]{index=6}
+    implementation(platform("org.springframework.ai:spring-ai-bom:1.1.2"))
+    // OpenAI Chat/Embedding 호출을 위한 오토컨피그 제공
+    implementation("org.springframework.ai:spring-ai-starter-model-openai")
+    // “일단 RAG 붙여보는” 용도로 가장 단순한 In-Memory VectorStore (실무에서는 나중에 pgvector/redis/weaviate 등으로 교체)
+    // implementation("org.springframework.ai:spring-ai-starter-vector-store-simple")
+    implementation("org.springframework.ai:spring-ai-vector-store")
+
     //testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     //testImplementation("org.springframework.security:spring-security-test")
 }
