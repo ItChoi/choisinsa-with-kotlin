@@ -6,5 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface CoreMemberJpaRepository : JpaRepository<MemberEntity, Long> {
     fun findByLoginIdAndStatus(loginId: String, status: MemberStatus): MemberEntity?
-
 }

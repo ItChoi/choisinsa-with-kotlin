@@ -1,7 +1,7 @@
 package com.mall.choisinsa.member.fixture.dto
 
 import com.mall.choisinsa.common.enumeration.GenderType
-import com.mall.choisinsa.common.enumeration.LoginType
+import com.mall.choisinsa.common.enumeration.SnsType
 import com.mall.choisinsa.terms.fixture.request.MemberTermsRequestFixture
 import com.mall.choisinsa.member.domain.dto.request.MemberRequest
 import com.mall.choisinsa.member.domain.dto.response.MemberResponse
@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 
 data class MemberFixture(
     var id: Long? = 0L,
-    var loginType: LoginType = LoginType.HOME,
+    var snsType: SnsType = SnsType.HOME,
     var loginId: String = "test123",
     var password: String = "qwe123!!",
     var email: String = "test@test.com",
@@ -25,7 +25,7 @@ data class MemberFixture(
 
     val memberTermsRequests: MutableList<MemberTermsRequest>? = MemberTermsRequestFixture().builds(),
 
-) {
+    ) {
     fun request(): MemberRequest {
         return MemberRequest(
             loginId = this.loginId,

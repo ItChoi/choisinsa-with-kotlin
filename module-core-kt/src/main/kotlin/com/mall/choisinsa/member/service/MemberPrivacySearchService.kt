@@ -16,4 +16,8 @@ class MemberPrivacySearchService(
     ) {
         memberPrivacySearchRepository.save(MemberPrivacySearchEntity.from(memberPrivacySearch))
     }
+
+    fun existsByEmail(email: String): Boolean? {
+        return memberPrivacySearchRepository.existsByEmail(email)
+    }
 }

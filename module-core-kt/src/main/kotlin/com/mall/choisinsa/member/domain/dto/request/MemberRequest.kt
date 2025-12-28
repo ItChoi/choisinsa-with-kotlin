@@ -1,7 +1,6 @@
 package com.mall.choisinsa.member.domain.dto.request
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.mall.choisinsa.common.enumeration.LoginType
 import com.mall.choisinsa.common.util.MemberValidation
 import com.mall.choisinsa.terms.domain.dto.MemberTermsRequest
 

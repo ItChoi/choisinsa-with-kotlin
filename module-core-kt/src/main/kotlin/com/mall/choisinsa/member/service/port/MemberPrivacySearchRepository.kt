@@ -4,4 +4,5 @@ import com.mall.choisinsa.member.domain.MemberPrivacySearchEntity
 
 interface MemberPrivacySearchRepository {
     fun save(from: MemberPrivacySearchEntity)
+    fun existsByEmail(email: String): Boolean
 }

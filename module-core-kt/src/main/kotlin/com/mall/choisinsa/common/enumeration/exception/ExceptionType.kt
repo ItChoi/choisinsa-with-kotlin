@@ -19,4 +19,5 @@ enum class ExceptionType(
     UNSUPPORTED_JWT_TOKEN("지원하지 않는 JWT 토큰입니다."),
     INVALID_JWT_TOKEN("유효하지 않은 JWT 토큰입니다."),
     CAN_NOT_REISSUE_TOKEN("액세스 토큰을 재발급 받을 수 없습니다."),
+    CAN_NOT_JSON_CONVERT("json convert가 되지 않았습니다. 데이터를 확인해주세요."),
 }

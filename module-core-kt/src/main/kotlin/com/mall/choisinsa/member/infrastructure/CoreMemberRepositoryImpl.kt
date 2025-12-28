@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class CoreMemberRepositoryImpl(
-    private val coreMemberJpaRepository: CoreMemberJpaRepository
+    private val coreMemberJpaRepository: CoreMemberJpaRepository,
+
 ) : CoreMemberRepository {
     override fun findByLoginIdAndStatus(
         loginId: String,
@@ -20,4 +21,5 @@ class CoreMemberRepositoryImpl(
     override fun save(member: Member): Member {
         return coreMemberJpaRepository.save(MemberEntity.from(member)).toModel()
     }
+
 }

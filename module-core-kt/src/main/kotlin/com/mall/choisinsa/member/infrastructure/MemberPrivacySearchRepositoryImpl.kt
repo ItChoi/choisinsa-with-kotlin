@@ -13,4 +13,8 @@ class MemberPrivacySearchRepositoryImpl(
     ) {
         memberPrivacySearchJpaRepository.save(memberPrivacySearchEntity)
     }
+
+    override fun existsByEmail(email: String): Boolean {
+        return memberPrivacySearchJpaRepository.existsByEmail(email)
+    }
 }

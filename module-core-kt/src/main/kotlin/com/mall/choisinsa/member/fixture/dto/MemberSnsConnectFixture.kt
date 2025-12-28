@@ -1,6 +1,6 @@
 package com.mall.choisinsa.member.fixture.dto
 
-import com.mall.choisinsa.common.enumeration.LoginType
+import com.mall.choisinsa.common.enumeration.SnsType
 import com.mall.choisinsa.member.domain.dto.response.MemberSnsConnectResponse
 import java.time.LocalDateTime
 
@@ -8,7 +8,7 @@ data class MemberSnsConnectFixture(
     val id: Long = 0L,
     val memberId: Long = 0L,
     val snsId: String = "asdasdu14124hSDFDS3rfds",
-    val snsType: LoginType = LoginType.APPLE,
+    val snsType: SnsType = SnsType.APPLE,
     val snsEmail: String = "asdasd@sdFG2@apple.com",
     val createdDt: LocalDateTime? = LocalDateTime.now(),
 ) {

@@ -1,6 +1,6 @@
 package com.mall.choisinsa.common.enumeration
 
-enum class LoginType (
+enum class SnsType (
     private val desc: String,
 ) {
     HOME("홈페이지 가입"),
